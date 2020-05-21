@@ -28,6 +28,7 @@ public class GameDelegateImpt implements GameDelegate{
 		TsscGame encontrado= restTemplate.postForEntity(SERVER +"games", nuevo, TsscGame.class).getBody();
 		return encontrado;
 	}
+	///hello
 
 	@Override
 	public TsscGame actualizar(TsscGame entity) {
