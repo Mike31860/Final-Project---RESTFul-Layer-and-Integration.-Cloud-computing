@@ -33,7 +33,6 @@ public class TopicRestController implements TopicController{
 	}
 	
 	
-	
 	@Override
 	@PostMapping("/topics")
 	public TsscTopic AnadirTopic(@RequestBody TsscTopic topic) {
