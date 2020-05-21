@@ -9,7 +9,7 @@ import com.example.demo.Model.TsscTopic;
 public interface StoryService {
 	
 	public TsscStory AnadirStory(TsscStory Story, long id);
-	public TsscStory ActualizarStory(TsscStory Story, String prority, String descripption);
+	public TsscStory ActualizarStory(TsscStory Story, String description, String Altdescripption);
 	public TsscStory findStoryById(Long id);
 	public boolean existbyId(Long id);
 	

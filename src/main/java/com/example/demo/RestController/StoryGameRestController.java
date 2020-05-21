@@ -19,7 +19,7 @@ public class StoryGameRestController implements StoryController{
 	private StoryService service;
 
 	@Override
-	@PostMapping("/api/stories/{id}")
+	@PostMapping("/api/games/{id}")
 	public TsscStory AnadirStory(@RequestBody TsscStory Story, @PathVariable long id) {
 		// TODO Auto-generated method stub
 		return service.AnadirStory(Story, id);
@@ -27,9 +27,9 @@ public class StoryGameRestController implements StoryController{
 
 	@Override
 	@PatchMapping("/api/stories")
-	public TsscStory ActualizarStory(@RequestBody TsscStory Story, String prority, String descripption) {
+	public TsscStory ActualizarStory(@RequestBody TsscStory Story) {
 		// TODO Auto-generated method stub
-		return service.ActualizarStory(Story, prority, descripption);
+		return service.ActualizarStory(Story, Story.getDescription(), Story.getAltDescripton());
 	}
 
 	@Override
@@ -54,10 +54,12 @@ public class StoryGameRestController implements StoryController{
 	}
 
 	@Override
-	@DeleteMapping("/api/stories")
-	public void eliminarStory(@RequestBody TsscStory story) {
+	@DeleteMapping("/api/stories/{id}")
+	public void eliminarStory(@PathVariable long id) {
+		
+		TsscStory encontrado=service.findStoryById(id);
 		// TODO Auto-generated method stub
-		service.eliminarStory(story);
+		service.eliminarStory(encontrado);
 	}
 
 }

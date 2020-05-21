@@ -20,17 +20,17 @@ public class GameRestController  implements GameController{
 	private GameService service;
 
 	@Override
-	@PatchMapping("/api/games")
-	public TsscGame ActualizarGame(@RequestBody TsscGame game, int Grupos, String name) {
+	@PatchMapping("/api/games/")
+	public TsscGame ActualizarGame(@RequestBody TsscGame game) {
 		
-		return service.ActualizarGame(game, Grupos, name);
+		return service.ActualizarGame(game, game.getNGroups(), game.getName());
 	}
 
 	@Override
 	@PostMapping("/api/games/{id}")
-	public TsscGame AnadirGameConTema(@RequestBody TsscGame gameOne, @PathVariable long id) {
+	public TsscGame AnadirGameConTema(@RequestBody TsscGame gameOne) {
 		// TODO Auto-generated method stub
-		return service.AnadirGameConTema(gameOne, id);
+		return service.AnadirGameConTema(gameOne, gameOne.getTsscTopic().getId());
 	}
 
 	@Override
@@ -42,9 +42,9 @@ public class GameRestController  implements GameController{
 
 	@Override
 	@PostMapping("/api/games/{id}")
-	public TsscGame AnadirGameJuego2(@RequestBody TsscGame gameOne, @PathVariable long id) {
+	public TsscGame AnadirGameJuego2(@RequestBody TsscGame gameOne) {
 		// TODO Auto-generated method stub
-		return service.AnadirGameJuego2(gameOne, id);
+		return service.AnadirGameJuego2(gameOne, gameOne.getTsscTopic().getId());
 	}
 
 	@Override
@@ -62,10 +62,10 @@ public class GameRestController  implements GameController{
 	}
 
 	@Override
-	@PostMapping("/api/games")
-	public TsscStory agregarStory(@RequestBody TsscGame game, @RequestBody TsscStory Story) {
-		// TODO Auto-generated method stub
-		return service.agregarStory(game, Story);
+	@PostMapping("/api/games/{id}")
+	public TsscStory agregarStory(@RequestBody TsscStory story, @PathVariable long id ) {
+		// TODO Auto-generated method stub	
+		return service.agregarStory(service.findGameById(id), story);
 	}
 
 	@Override
@@ -76,10 +76,11 @@ public class GameRestController  implements GameController{
 	}
 
 	@Override
-	@DeleteMapping("/api/games")
-	public void eliminarGame(@RequestBody TsscGame juego) {
+	@DeleteMapping("/api/games/{id}")
+	public void eliminarGame(@PathVariable long id) {
 		// TODO Auto-generated method stub
-		service.eliminarGame(juego);
+		TsscGame encontrado=service.findGameById(id);
+		service.eliminarGame(encontrado);
 	}
 
 	@Override
@@ -89,5 +90,7 @@ public class GameRestController  implements GameController{
 		service.actualizarGameDato(game);
 		
 	}
+
+
 
 }

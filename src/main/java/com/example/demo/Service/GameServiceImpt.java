@@ -77,7 +77,7 @@ public class GameServiceImpt implements GameService {
 		if (gameOne != null && Grupos > 0 && name != null && !name.equals("")&&game.existsById(gameOne.getId())) {
 			gameOne.setName(name);
 			gameOne.setNGroups(Grupos);
-			game.guardar(gameOne);
+			game.actualizar(gameOne);
 			return gameOne;
 		}
 

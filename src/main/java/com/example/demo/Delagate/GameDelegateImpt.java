@@ -25,31 +25,32 @@ public class GameDelegateImpt implements GameDelegate{
 
 	@Override
 	public TsscGame guardar(TsscGame nuevo) {
-		TsscGame encontrado= restTemplate.postForEntity(SERVER +"GameCap", nuevo, TsscGame.class).getBody();
-		return null;
+		TsscGame encontrado= restTemplate.postForEntity(SERVER +"games", nuevo, TsscGame.class).getBody();
+		return encontrado;
 	}
 
 	@Override
 	public TsscGame actualizar(TsscGame entity) {
 		// TODO Auto-generated method stub
+		restTemplate.patchForObject(SERVER+"games", entity, TsscGame.class);
 		return null;
 	}
 
 	@Override
 	public void eliminar(TsscGame entity) {
-		restTemplate.delete(SERVER+"GameCap/"+entity.getId());
+		restTemplate.delete(SERVER+"games/"+entity.getId());
 		
 	}
 
 	@Override
 	public TsscGame encontrarPorId(long id) {
-		TsscGame encontrado= restTemplate.getForObject(SERVER+"GameCap/"+id, TsscGame.class ); 
+		TsscGame encontrado= restTemplate.getForObject(SERVER+"games/"+id, TsscGame.class ); 
 		return null;
 	}
 
 	@Override
 	public List<TsscGame> findAll() {
-		TsscGame[] games= restTemplate.getForObject(SERVER+"TemaCap",TsscGame[].class );
+		TsscGame[] games= restTemplate.getForObject(SERVER+"games",TsscGame[].class );
 		List<TsscGame> nueva= Arrays.asList(games);
 		return nueva;
 	}
