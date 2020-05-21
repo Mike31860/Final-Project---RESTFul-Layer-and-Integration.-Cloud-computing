@@ -26,7 +26,7 @@ public class TopicRestController implements TopicController{
 	private TopicService service;
 
 	@Override
-	@GetMapping("/topics/{id}")
+	@GetMapping("/api/topics/{id}")
 	public TsscTopic findTopicById(@PathVariable long id) {
 
 		return service.findTopicById(id);
@@ -34,14 +34,14 @@ public class TopicRestController implements TopicController{
 	
 	
 	@Override
-	@PostMapping("/topics")
+	@PostMapping("/api/topics")
 	public TsscTopic AnadirTopic(@RequestBody TsscTopic topic) {
 		// TODO Auto-generated method stub
 		return service.AnadirTopic(topic);
 	}
 
 	@Override
-	@PatchMapping("/topics")
+	@PatchMapping("/api/topics")
 	public TsscTopic ActualizarTopic(@RequestBody TsscTopic topic, String name, String Description) {
 		// TODO Auto-generated method stub
 		return service.ActualizarTopic(topic, name, Description);
@@ -57,21 +57,21 @@ public class TopicRestController implements TopicController{
 	}
 
 	@Override
-	@GetMapping("/topics")
+	@GetMapping("/api/topics")
 	public Iterable<TsscTopic> findAlll() {
 		// TODO Auto-generated method stub
 		return service.findAlll();
 	}
 
 	@Override
-	@PatchMapping("/topics")
+	@PatchMapping("/api/topics")
 	public void actualizar(@RequestBody TsscTopic topic) {
 		// TODO Auto-generated method stub
 		service.actualizar(topic);
 	}
 
 	@Override
-	@DeleteMapping("/topics")
+	@DeleteMapping("/api/topics")
 	public void eliminarTopic(@RequestBody TsscTopic topic) {
 		// TODO Auto-generated method stub
 		service.eliminarTopic(topic);

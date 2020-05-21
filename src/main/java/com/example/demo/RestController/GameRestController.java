@@ -20,70 +20,70 @@ public class GameRestController  implements GameController{
 	private GameService service;
 
 	@Override
-	@PatchMapping("/games")
+	@PatchMapping("/api/games")
 	public TsscGame ActualizarGame(@RequestBody TsscGame game, int Grupos, String name) {
 		
 		return service.ActualizarGame(game, Grupos, name);
 	}
 
 	@Override
-	@PostMapping("/games/{id}")
+	@PostMapping("/api/games/{id}")
 	public TsscGame AnadirGameConTema(@RequestBody TsscGame gameOne, @PathVariable long id) {
 		// TODO Auto-generated method stub
 		return service.AnadirGameConTema(gameOne, id);
 	}
 
 	@Override
-	@PostMapping("/games")
+	@PostMapping("/api/games")
 	public TsscGame AnadirGameSinTema(@RequestBody TsscGame gameOne) {
 		// TODO Auto-generated method stub
 		return service.AnadirGameSinTema(gameOne);
 	}
 
 	@Override
-	@PostMapping("/games/{id}")
+	@PostMapping("/api/games/{id}")
 	public TsscGame AnadirGameJuego2(@RequestBody TsscGame gameOne, @PathVariable long id) {
 		// TODO Auto-generated method stub
 		return service.AnadirGameJuego2(gameOne, id);
 	}
 
 	@Override
-	@GetMapping("games/{id}")
+	@GetMapping("/api/games/{id}")
 	public TsscGame findGameById(@PathVariable long id) {
 		// TODO Auto-generated method stub
 		return service.findGameById(id);
 	}
 
 	@Override
-	@GetMapping("games/{id}")
+	@GetMapping("/api/games/{id}")
 	public boolean existbyId(@PathVariable long id) {
 		// TODO Auto-generated method stub
 		return service.existbyId(id);
 	}
 
 	@Override
-	@PostMapping("/games")
+	@PostMapping("/api/games")
 	public TsscStory agregarStory(@RequestBody TsscGame game, @RequestBody TsscStory Story) {
 		// TODO Auto-generated method stub
 		return service.agregarStory(game, Story);
 	}
 
 	@Override
-	@GetMapping("/games")
+	@GetMapping("/api/games")
 	public Iterable<TsscGame> findAlll() {
 		// TODO Auto-generated method stub
 		return service.findAlll();
 	}
 
 	@Override
-	@DeleteMapping("/games")
+	@DeleteMapping("/api/games")
 	public void eliminarGame(@RequestBody TsscGame juego) {
 		// TODO Auto-generated method stub
 		service.eliminarGame(juego);
 	}
 
 	@Override
-	@PatchMapping("/games")
+	@PatchMapping("/api/games")
 	public void actualizarGameDato(@RequestBody TsscGame game) {
 		// TODO Auto-generated method stub
 		service.actualizarGameDato(game);
