@@ -4,9 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -23,51 +26,56 @@ public class TopicRestController implements TopicController{
 	private TopicService service;
 
 	@Override
-	@GetMapping("/TemaCap/{id}")
-	public TsscTopic findTopicById(@PathVariable Long id) {
-		
+	@GetMapping("/topics/{id}")
+	public TsscTopic findTopicById(@PathVariable long id) {
+
 		return service.findTopicById(id);
 	}
 	
 	
 	
 	@Override
-	
-	public TsscTopic AnadirTopic(TsscTopic topic) {
+	@PostMapping("/topics")
+	public TsscTopic AnadirTopic(@RequestBody TsscTopic topic) {
 		// TODO Auto-generated method stub
-		return null;
+		return service.AnadirTopic(topic);
 	}
 
 	@Override
-	public TsscTopic ActualizarTopic(TsscTopic topic, String name, String Description) {
+	@PatchMapping("/topics")
+	public TsscTopic ActualizarTopic(@RequestBody TsscTopic topic, String name, String Description) {
 		// TODO Auto-generated method stub
-		return null;
+		return service.ActualizarTopic(topic, name, Description);
 	}
 
 
 
 	@Override
-	public boolean existeById(Long id) {
+	@GetMapping("/topics")
+	public boolean existeById(@PathVariable long id) {
 		// TODO Auto-generated method stub
-		return false;
+		return service.existeById(id);
 	}
 
 	@Override
+	@GetMapping("/topics")
 	public Iterable<TsscTopic> findAlll() {
 		// TODO Auto-generated method stub
-		return null;
+		return service.findAlll();
 	}
 
 	@Override
-	public void actualizar(TsscTopic topic) {
+	@PatchMapping("/topics")
+	public void actualizar(@RequestBody TsscTopic topic) {
 		// TODO Auto-generated method stub
-		
+		service.actualizar(topic);
 	}
 
 	@Override
-	public void eliminarTopic(TsscTopic story) {
+	@DeleteMapping("/topics")
+	public void eliminarTopic(@RequestBody TsscTopic topic) {
 		// TODO Auto-generated method stub
-		
+		service.eliminarTopic(topic);
 	}
 
 
