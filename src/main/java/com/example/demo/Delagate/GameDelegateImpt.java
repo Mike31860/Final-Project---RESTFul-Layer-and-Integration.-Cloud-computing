@@ -31,10 +31,10 @@ public class GameDelegateImpt implements GameDelegate{
 	///hello
 
 	@Override
-	public TsscGame actualizar(TsscGame entity) {
+	public void actualizar(TsscGame entity) {
 		// TODO Auto-generated method stub
 		restTemplate.patchForObject(SERVER+"games", entity, TsscGame.class);
-		return null;
+		
 	}
 
 	@Override
@@ -46,7 +46,7 @@ public class GameDelegateImpt implements GameDelegate{
 	@Override
 	public TsscGame encontrarPorId(long id) {
 		TsscGame encontrado= restTemplate.getForObject(SERVER+"games/"+id, TsscGame.class ); 
-		return null;
+		return encontrado;
 	}
 
 	@Override

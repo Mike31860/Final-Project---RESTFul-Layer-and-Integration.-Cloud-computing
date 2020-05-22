@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
+import com.example.demo.Model.TsscGame;
 import com.example.demo.Model.TsscStory;
 import com.example.demo.Model.TsscTopic;
 
@@ -25,19 +26,20 @@ public class storyDelegateImpt implements storyDelegate {
 	
 	@Override
 	public TsscStory guardar(TsscStory nuevo) {
-		TsscStory encontrado= restTemplate.postForEntity(SERVER +"TemaCap", nuevo, TsscStory.class).getBody();
+		TsscStory encontrado= restTemplate.postForEntity(SERVER +"stories", nuevo, TsscStory.class).getBody();
 		return encontrado;
 	}
 
 	@Override
-	public TsscStory actualizar(TsscStory entity) {
+	public void actualizar(TsscStory entity) {
 		// TODO Auto-generated method stub
-		return null;
+		restTemplate.patchForObject(SERVER+"stories", entity, TsscStory.class);
+	
 	}
 
 	@Override
 	public void eliminar(TsscStory nuevo) {
-		restTemplate.delete(SERVER+"StoryCap/"+nuevo.getId());
+		restTemplate.delete(SERVER+"stories/"+nuevo.getId());
 		
 		
 	}
