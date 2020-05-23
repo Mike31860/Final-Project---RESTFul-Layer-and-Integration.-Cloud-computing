@@ -20,54 +20,30 @@ public class GameRestController  implements GameController{
 	private GameService service;
 
 	@Override
-	@PatchMapping("/api/games/")
+	@PatchMapping("/api/games")
 	public TsscGame ActualizarGame(@RequestBody TsscGame game) {
-		
 		return service.ActualizarGame(game, game.getNGroups(), game.getName());
-	}
-
+	}	
+	
 	@Override
-	@PostMapping("/api/games/{id}")
-	public TsscGame AnadirGameConTema(@RequestBody TsscGame gameOne) {
+	@PostMapping("/api/games/")
+	public TsscGame AnadirGame(@RequestBody TsscGame gameOne) {
 		// TODO Auto-generated method stub
-		return service.AnadirGameConTema(gameOne, gameOne.getTsscTopic().getId());
-	}
-
-	@Override
-	@PostMapping("/api/games")
-	public TsscGame AnadirGameSinTema(@RequestBody TsscGame gameOne) {
-		// TODO Auto-generated method stub
+		if(gameOne.getTsscTopic()==null) {
 		return service.AnadirGameSinTema(gameOne);
+		}
+		else{
+			return service.AnadirGameConTema(gameOne, gameOne.getTsscTopic().getId());
+		}
 	}
-
-	@Override
-	@PostMapping("/api/games/{id}")
-	public TsscGame AnadirGameJuego2(@RequestBody TsscGame gameOne) {
-		// TODO Auto-generated method stub
-		return service.AnadirGameJuego2(gameOne, gameOne.getTsscTopic().getId());
-	}
-
+	
 	@Override
 	@GetMapping("/api/games/{id}")
 	public TsscGame findGameById(@PathVariable long id) {
 		// TODO Auto-generated method stub
 		return service.findGameById(id);
 	}
-
-	@Override
-	@GetMapping("/api/games/{id}")
-	public boolean existbyId(@PathVariable long id) {
-		// TODO Auto-generated method stub
-		return service.existbyId(id);
-	}
-
-	@Override
-	@PostMapping("/api/games/{id}")
-	public TsscStory agregarStory(@RequestBody TsscStory story, @PathVariable long id ) {
-		// TODO Auto-generated method stub	
-		return service.agregarStory(service.findGameById(id), story);
-	}
-
+	
 	@Override
 	@GetMapping("/api/games")
 	public Iterable<TsscGame> findAlll() {
@@ -77,19 +53,60 @@ public class GameRestController  implements GameController{
 
 	@Override
 	@DeleteMapping("/api/games/{id}")
-	public void eliminarGame(@PathVariable long id) {
+	public TsscGame eliminarGame(@PathVariable long id) {
 		// TODO Auto-generated method stub
 		TsscGame encontrado=service.findGameById(id);
 		service.eliminarGame(encontrado);
+		return encontrado;
 	}
 
 	@Override
-	@PatchMapping("/api/games")
-	public void actualizarGameDato(@RequestBody TsscGame game) {
+	public Iterable<TsscStory> findHistorias() {
 		// TODO Auto-generated method stub
-		service.actualizarGameDato(game);
-		
+		return null;
 	}
+
+    //@Override
+	//@PostMapping("/api/games/add")
+	//public TsscGame AnadirGameConTema(@RequestBody TsscGame gameOne) {
+		// TODO Auto-generated method stub
+	//	return service.AnadirGameConTema(gameOne, gameOne.getTsscTopic().getId());
+	//}
+
+	
+
+///	@Override
+//	@PostMapping("/api/games/add")
+//	public TsscGame AnadirGameJuego2(@RequestBody TsscGame gameOne) {
+//		// TODO Auto-generated method stub
+//		return service.AnadirGameJuego2(gameOne, gameOne.getTsscTopic().getId());
+//	}
+
+	
+
+//	@Override
+//	@GetMapping("/api/games/{id}")
+//	public boolean existbyId(@PathVariable long id) {
+//		// TODO Auto-generated method stub
+//		return service.existbyId(id);
+//	}
+
+//	@Override
+//	@PostMapping("/api/games/{id}")
+//	public TsscStory agregarStory(@RequestBody TsscStory story, @PathVariable long id ) {
+///		// TODO Auto-generated method stub	
+//		return service.agregarStory(service.findGameById(id), story);
+//	}
+
+	
+
+//	@Override
+//	@PatchMapping("/api/games/edit")
+//	public void actualizarGameDato(@RequestBody TsscGame game) {
+//		// TODO Auto-generated method stub
+//		service.actualizarGameDato(game);
+		
+////	}
 
 
 

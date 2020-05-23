@@ -39,12 +39,12 @@ public class StoryGameRestController implements StoryController{
 		return service.findStoryById(id);
 	}
 
-	@Override
-	@GetMapping("/api/stories/{id}")
-	public boolean existbyId(@PathVariable long id) {
-		// TODO Auto-generated method stub
-		return service.existbyId(id);
-	}
+//	@Override
+//	@GetMapping("/api/stories/{id}")
+//	public boolean existbyId(@PathVariable long id) {
+//		// TODO Auto-generated method stub
+//		return service.existbyId(id);
+//	}
 
 	@Override
 	@GetMapping("/api/stories")
@@ -55,11 +55,12 @@ public class StoryGameRestController implements StoryController{
 
 	@Override
 	@DeleteMapping("/api/stories/{id}")
-	public void eliminarStory(@PathVariable long id) {
+	public TsscStory eliminarStory(@PathVariable long id) {
 		
 		TsscStory encontrado=service.findStoryById(id);
 		// TODO Auto-generated method stub
 		service.eliminarStory(encontrado);
+		return encontrado;
 	}
 
 }

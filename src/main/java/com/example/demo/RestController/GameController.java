@@ -9,14 +9,15 @@ import com.example.demo.Model.TsscStory;
 public interface GameController {
 	
 	public TsscGame ActualizarGame(TsscGame game);
-	public TsscGame AnadirGameConTema(TsscGame gameOne) ;
-	public TsscGame AnadirGameSinTema(TsscGame gameOne);
-	public TsscGame AnadirGameJuego2(TsscGame gameOne) ;
+	public TsscGame AnadirGame(TsscGame gameOne) ;
+	//public TsscGame AnadirGameSinTema(TsscGame gameOne);
+	//public TsscGame AnadirGameJuego2(TsscGame gameOne) ;
 	public TsscGame findGameById(long id);  
-	public boolean existbyId(long id);
-	public TsscStory agregarStory(TsscStory story,long id );
+	//public boolean existbyId(long id);
+	//public TsscStory agregarStory(TsscStory story,long id );
 	public Iterable<TsscGame> findAlll();
-	public void eliminarGame(long id);
-	public void actualizarGameDato(TsscGame game);
+	public Iterable<TsscStory> findHistorias();
+	public TsscGame eliminarGame(long id);
+	//public void actualizarGameDato(TsscGame game);
 
 }

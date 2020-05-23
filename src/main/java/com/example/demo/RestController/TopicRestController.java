@@ -39,12 +39,12 @@ public class TopicRestController implements TopicController{
 	}
 
 
-	@Override
-	@GetMapping("/topics")
-	public boolean existeById(@PathVariable long id) {
-		// TODO Auto-generated method stub
-		return service.existeById(id);
-	}
+//	@Override
+//	@GetMapping("/topics")
+//	public boolean existeById(@PathVariable long id) {
+//		// TODO Auto-generated method stub
+//		return service.existeById(id);
+//	}
 
 	@Override
 	@GetMapping("/api/topics")
@@ -62,10 +62,11 @@ public class TopicRestController implements TopicController{
 
 	@Override
 	@DeleteMapping("/api/topics/{id}")
-	public void eliminarTopic(@PathVariable long id) {
+	public TsscTopic eliminarTopic(@PathVariable long id) {
 		// TODO Auto-generated method stub
 		TsscTopic encontrado=service.findTopicById(id);
 		service.eliminarTopic(encontrado);
+		return encontrado;
 	}
 
 

@@ -16,7 +16,7 @@ public class storyDelegateImpt implements storyDelegate {
 	
 	
 	private RestTemplate restTemplate;
-	final String SERVER="http://localhost:8080";
+	final String SERVER="http://localhost:8080/";
 	
 
 	public storyDelegateImpt() {
@@ -26,33 +26,33 @@ public class storyDelegateImpt implements storyDelegate {
 	
 	@Override
 	public TsscStory guardar(TsscStory nuevo) {
-		TsscStory encontrado= restTemplate.postForEntity(SERVER +"stories", nuevo, TsscStory.class).getBody();
+		TsscStory encontrado= restTemplate.postForEntity(SERVER +"api/games", nuevo, TsscStory.class).getBody();
 		return encontrado;
 	}
 
 	@Override
 	public void actualizar(TsscStory entity) {
 		// TODO Auto-generated method stub
-		restTemplate.patchForObject(SERVER+"stories", entity, TsscStory.class);
+		restTemplate.patchForObject(SERVER+"api/stories", entity, TsscStory.class);
 	
 	}
 
 	@Override
 	public void eliminar(TsscStory nuevo) {
-		restTemplate.delete(SERVER+"stories/"+nuevo.getId());
+		restTemplate.delete(SERVER+"api/stories/"+nuevo.getId());
 		
 		
 	}
 
 	@Override
 	public TsscStory encontrarPorId(long id) {
-		TsscStory encontrado=restTemplate.getForObject(SERVER+"StoryCap/"+id, TsscStory.class ); 
+		TsscStory encontrado=restTemplate.getForObject(SERVER+"api/stories/"+id, TsscStory.class ); 
 		return null;
 	}
 
 	@Override
 	public List<TsscStory> findAll() {
-		TsscStory[] stories= restTemplate.getForObject(SERVER+"StoryCap",TsscStory[].class );
+		TsscStory[] stories= restTemplate.getForObject(SERVER+"api/stories",TsscStory[].class );
 		List<TsscStory> nueva= Arrays.asList(stories);
 		return nueva;
 	}

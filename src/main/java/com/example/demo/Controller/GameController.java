@@ -89,7 +89,7 @@ public class GameController {
 
 	}
 
-	@GetMapping("/gameCap/edit/{id}")
+	@GetMapping("/gameCap/edit/{99}")
 	public String mostrarGameAEditarPrincipal(@PathVariable("id") long id, Model modelPrincipal) {
 		TsscGame juego = servicio.findGameById(id);
 		if (juego == null)

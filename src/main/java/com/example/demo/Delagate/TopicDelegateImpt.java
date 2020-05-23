@@ -13,7 +13,7 @@ public class TopicDelegateImpt implements TopicDelegate {
 	
 	
 	private RestTemplate restTemplate;
-	final String SERVER="http://localhost:8080";
+	final String SERVER="http://localhost:8080/";
 
 	public TopicDelegateImpt() {
 		this.restTemplate = new RestTemplate ();
@@ -21,7 +21,7 @@ public class TopicDelegateImpt implements TopicDelegate {
 
 	@Override
 	public TsscTopic guardar(TsscTopic nuevo) {
-		TsscTopic encontrado= restTemplate.postForEntity(SERVER +"TemaCap", nuevo, TsscTopic.class).getBody();
+		TsscTopic encontrado= restTemplate.postForEntity(SERVER +"api/topics", nuevo, TsscTopic.class).getBody();
 		return encontrado;
 	}
 
@@ -33,13 +33,13 @@ public class TopicDelegateImpt implements TopicDelegate {
 
 	@Override
 	public void eliminar(TsscTopic encontrado) {
-		restTemplate.delete(SERVER+"TemaCap/"+encontrado.getId());
+		restTemplate.delete(SERVER+"api/topics/"+encontrado.getId());
 		
 	}
 
 	@Override
 	public TsscTopic findById(long id) {
-		TsscTopic encontrado= restTemplate.getForObject(SERVER+"TemaCap/"+id, TsscTopic.class ); 
+		TsscTopic encontrado= restTemplate.getForObject(SERVER+"api/topics/"+id, TsscTopic.class ); 
 		return encontrado;
 	}
 
@@ -47,7 +47,7 @@ public class TopicDelegateImpt implements TopicDelegate {
 	public Iterable<TsscTopic> findAll() {
 
 		
-		TsscTopic[] topics= restTemplate.getForObject(SERVER+"TemaCap",TsscTopic[].class );
+		TsscTopic[] topics= restTemplate.getForObject(SERVER+"api/topics",TsscTopic[].class );
 		List<TsscTopic> nueva= Arrays.asList(topics);
 		
 		return nueva;
