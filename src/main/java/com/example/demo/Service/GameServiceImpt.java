@@ -1,23 +1,19 @@
 package com.example.demo.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.example.demo.DAOS.GameDao;
+import com.example.demo.Model.TsscAdmin;
 import com.example.demo.Model.TsscGame;
 import com.example.demo.Model.TsscStory;
+import com.example.demo.Model.TsscTimecontrol;
 import com.example.demo.Model.TsscTopic;
-import com.example.demo.Repository.GameRepository;
-import com.example.demo.Repository.TopicRepository;
 
 @Service
 public class GameServiceImpt implements GameService {
-	
 
 	@Autowired
 	private GameDao game;
@@ -32,7 +28,7 @@ public class GameServiceImpt implements GameService {
 	}
 
 	@Override
-	@Transactional(readOnly=false, propagation=Propagation.REQUIRED, rollbackFor=Exception.class)
+	@Transactional(readOnly = false, propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
 	public TsscGame AnadirGameConTema(TsscGame gameOne, long ids) {
 		if (gameOne.getNGroups() > 0 && gameOne.getNSprints() > 0) {
 			TsscTopic encontrado = repo.findTopicById(ids);
@@ -47,7 +43,7 @@ public class GameServiceImpt implements GameService {
 
 			else {
 
-			//	game.save(gameOne);
+				// game.save(gameOne);
 				return null;
 			}
 
@@ -57,12 +53,12 @@ public class GameServiceImpt implements GameService {
 	}
 
 	@Override
-	@Transactional(readOnly=false, propagation=Propagation.REQUIRED, rollbackFor=Exception.class)
+	@Transactional(readOnly = false, propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
 	public TsscGame AnadirGameSinTema(TsscGame gameOne) {
-		if (gameOne!=null&&gameOne.getNGroups() > 0 && gameOne.getNSprints() > 0) {
+		if (gameOne != null && gameOne.getNGroups() > 0 && gameOne.getNSprints() > 0) {
 
 			game.guardar(gameOne);
-		
+
 			return gameOne;
 		}
 
@@ -71,10 +67,10 @@ public class GameServiceImpt implements GameService {
 	}
 
 	@Override
-	@Transactional(readOnly=false, propagation=Propagation.REQUIRED, rollbackFor=Exception.class)
+	@Transactional(readOnly = false, propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
 	public TsscGame ActualizarGame(TsscGame gameOne, int Grupos, String name) {
 
-		if (gameOne != null && Grupos > 0 && name != null && !name.equals("")&&game.existsById(gameOne.getId())) {
+		if (gameOne != null && Grupos > 0 && name != null && !name.equals("") && game.existsById(gameOne.getId())) {
 			gameOne.setName(name);
 			gameOne.setNGroups(Grupos);
 			game.actualizar(gameOne);
@@ -85,10 +81,10 @@ public class GameServiceImpt implements GameService {
 	}
 
 	@Override
-	@Transactional(readOnly=false, propagation=Propagation.REQUIRED, rollbackFor=Exception.class)
+	@Transactional(readOnly = false, propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
 	public TsscGame AnadirGameJuego2(TsscGame gameOne, long id) {
 
-		if (gameOne!=null&&gameOne.getNGroups() > 0 && gameOne.getNSprints() > 0) {
+		if (gameOne != null && gameOne.getNGroups() > 0 && gameOne.getNSprints() > 0) {
 			TsscTopic encontrado = repo.findTopicById(id);
 
 			if (encontrado != null) {
@@ -96,12 +92,11 @@ public class GameServiceImpt implements GameService {
 				gameOne.setTsscStories(encontrado.getTsscStories());
 				gameOne.setTsscTimecontrol(encontrado.getTsscCronograma());
 				gameOne.setTsscTopic(encontrado);
-				
-				
+
 				game.guardar(gameOne);
 				encontrado.getTsscGames().add(gameOne);
 				repo.actualizar(encontrado);
-			
+
 				return gameOne;
 
 			}
@@ -111,7 +106,7 @@ public class GameServiceImpt implements GameService {
 	}
 
 	@Override
-	@Transactional(readOnly=false, propagation=Propagation.REQUIRED, rollbackFor=Exception.class)
+	@Transactional(readOnly = false, propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
 	public TsscGame findGameById(Long id) {
 
 		try {
@@ -125,20 +120,15 @@ public class GameServiceImpt implements GameService {
 		}
 
 	}
-	
 
-	
-	
-	
 	@Override
-	@Transactional(readOnly=false, propagation=Propagation.REQUIRED, rollbackFor=Exception.class)
-	public boolean existbyId(Long id)
-	{
+	@Transactional(readOnly = false, propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+	public boolean existbyId(Long id) {
 		return game.existsById(id);
 	}
 
 	@Override
-	@Transactional(readOnly=false, propagation=Propagation.REQUIRED, rollbackFor=Exception.class)
+	@Transactional(readOnly = false, propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
 	public TsscStory agregarStory(TsscGame game1, TsscStory Story) {
 		// TODO Auto-generated method stub
 		game1.addTsscStory(Story);
@@ -147,24 +137,45 @@ public class GameServiceImpt implements GameService {
 	}
 
 	@Override
-	@Transactional(readOnly=false, propagation=Propagation.REQUIRED, rollbackFor=Exception.class)
+	@Transactional(readOnly = false, propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
 	public Iterable<TsscGame> findAlll() {
 		// TODO Auto-generated method stub
 		return game.findAll();
 	}
 
 	@Override
-	@Transactional(readOnly=false, propagation=Propagation.REQUIRED, rollbackFor=Exception.class)
+	@Transactional(readOnly = false, propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
 	public void eliminarGame(TsscGame juego) {
+
+		for (int i = 0; i < juego.getTsscGameAdmins().size(); i++) {
+			TsscAdmin ecnontrado = juego.getTsscGameAdmins().get(i).getTsscAdmin();
+			for (int j = 0; j < ecnontrado.getTsscGameAdmins().size(); j++) {
+
+				if (ecnontrado.getTsscGameAdmins().get(j).getTsscGame().getName().equals(juego.getName())) {
+					ecnontrado.getTsscGameAdmins().get(j).setTsscGame(null);
+				}
+			}
+			juego.getTsscGameAdmins().set(i, null);
+
+		}
+
+		for (int i = 0; i < juego.getTsscTimecontrols().size(); i++) {
+
+			TsscTimecontrol encontrado = juego.getTsscTimecontrols().get(i);
+			encontrado.setTsscGame(juego);
+
+		}
+		juego.setTsscTimecontrol(null);
+
 		game.eliminar(juego);
-		
-		
+
 	}
 
 	@Override
+	@Transactional(readOnly = false, propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
 	public void actualizarGameDato(TsscGame game3) {
 		game.actualizar(game3);
-		
+
 	}
 
 //

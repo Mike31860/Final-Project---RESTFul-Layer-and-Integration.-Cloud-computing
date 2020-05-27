@@ -36,14 +36,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity httpSecurity) throws Exception {
 		
-		httpSecurity.formLogin().loginPage("/login").permitAll().and().authorizeRequests()
-		.antMatchers("/index").permitAll()
-		.antMatchers("/gameCap/", "/storyCap/", "/gameCap/**", "/storyCap/**").hasAnyRole("admin", "superadmin")
-		.antMatchers("/TemaCap/**").hasRole("superadmin")
-		.anyRequest().authenticated().and().httpBasic().and().logout().invalidateHttpSession(true)
-		.clearAuthentication(true).logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-		.logoutSuccessUrl("/login?logout").permitAll().and().exceptionHandling()
-		.accessDeniedHandler(accessDeniedHandler);
+		httpSecurity.
+//		authorizeRequests().antMatchers("/api").permitAll().and().formLogin().loginPage("/login").permitAll().and().authorizeRequests()
+//		.antMatchers("/index").permitAll()
+//		.antMatchers("/gameCap/", "/storyCap/", "/gameCap/**", "/storyCap/**").hasAnyRole("admin", "superadmin")
+//		.antMatchers("/TemaCap/**").hasRole("superadmin")
+//		.anyRequest().authenticated().and().httpBasic().and().logout().invalidateHttpSession(true)
+//		.clearAuthentication(true).logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+//		.logoutSuccessUrl("/login?logout").permitAll().and().exceptionHandling()
+//		.accessDeniedHandler(accessDeniedHandler);
+//		
+		authorizeRequests().antMatchers("/api").permitAll().and().csrf().disable();
 
 //		httpSecurity.authorizeRequests().antMatchers("**").authenticated().anyRequest().permitAll().and().formLogin()
 //		.loginPage("/login").permitAll().and().logout()

@@ -17,7 +17,8 @@ public class AdminDaoImpt implements AdminDao {
 
 	@Override
 	public TsscAdmin guardar(TsscAdmin entity) {
-		entityManager.persist(entity);
+		//entityManager.persist(entity);
+		entityManager.merge(entity);
 		return entity;
 	}
 

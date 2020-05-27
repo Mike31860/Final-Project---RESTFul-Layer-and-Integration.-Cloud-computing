@@ -19,7 +19,7 @@ public class StoryGameRestController implements StoryController{
 	private StoryService service;
 
 	@Override
-	@PostMapping("/api/games/{id}")
+	@PostMapping("/api/stories/games/{id}")
 	public TsscStory AnadirStory(@RequestBody TsscStory Story, @PathVariable long id) {
 		// TODO Auto-generated method stub
 		return service.AnadirStory(Story, id);

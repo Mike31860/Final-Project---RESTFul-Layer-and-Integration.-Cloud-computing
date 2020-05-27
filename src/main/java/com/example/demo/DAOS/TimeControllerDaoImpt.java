@@ -19,7 +19,8 @@ public class TimeControllerDaoImpt implements TimeControllerDao{
 
 	@Override
 	public  TsscTimecontrol save(TsscTimecontrol entity) {
-		entityManager.persist(entity);
+		//entityManager.persist(entity);
+		entityManager.merge(entity);
 		return entity;
 	}
 

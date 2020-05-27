@@ -31,7 +31,7 @@ class TsscStoryTest {
 	
 		
 		TsscStory nueva = new TsscStory();
-		nueva.setBusinessValue(BigDecimal.valueOf(0));
+		nueva.setBusinessValue(BigDecimal.valueOf(1));
 		nueva.setInitialSprint(BigDecimal.valueOf(1));
 		nueva.setPriority(BigDecimal.valueOf(1));
 		Long id = nueva.getId();

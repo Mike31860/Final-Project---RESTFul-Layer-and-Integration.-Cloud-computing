@@ -49,17 +49,17 @@ public class TsscTopic implements Serializable {
 	private String groupPrefix;
 
 	// bi-directional many-to-one association to TsscStory
-	@OneToMany(mappedBy = "tsscTopic")
+	@OneToMany( cascade= {CascadeType.MERGE}, mappedBy = "tsscTopic")
 	@JsonIgnore
 	private List<TsscGame> tsscGames;
 
 	// bi-directional many-to-one association to TsscStory
-	@OneToMany(mappedBy = "tsscTopic")
+	@OneToMany(cascade= {CascadeType.MERGE}, mappedBy = "tsscTopic")
 	@JsonIgnore
 	private List<TsscStory> tsscStories;
 
 	
-	@OneToMany( mappedBy = "tsscTopic")
+	@OneToMany(cascade= {CascadeType.MERGE},mappedBy = "tsscTopic")
 	@JsonIgnore
 	private List<TsscTimecontrol> tsscCronograma;
 

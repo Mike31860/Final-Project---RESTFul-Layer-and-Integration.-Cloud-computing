@@ -11,6 +11,7 @@ import javax.persistence.Query;
 import org.springframework.context.annotation.Scope;
 import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.example.demo.Model.TsscTopic;
 
@@ -23,7 +24,9 @@ public class TopicDaoImpt implements TopicDao {
 
 	@Override
 	public TsscTopic guardar(TsscTopic entity) {
-		entityManager.persist(entity);
+
+		//entityManager.persist(entity);
+		entityManager.merge(entity);
 		return entity;
 	}
 

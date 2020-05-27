@@ -84,7 +84,7 @@ public class TsscGame implements Serializable {
 	@JoinColumn(name = "TSSC_STATE_ID")
 	private TsscState tsscState;
 
-	// bi-directional many-to-one association to TsscGameAdmin
+	 //bi-directional many-to-one association to TsscGameAdmin
 	@OneToMany(mappedBy = "tsscGame")
 	private List<TsscGameAdmin> tsscGameAdmins;
 
@@ -102,7 +102,7 @@ public class TsscGame implements Serializable {
 
 	// bi-directional many-to-one association to TsscStory
 
-	@OneToMany( mappedBy = "tsscGame")
+	@OneToMany( fetch = FetchType.EAGER,mappedBy = "tsscGame")
 	@JsonIgnore
 	private List<TsscStory> tsscStories;
 	
@@ -134,6 +134,7 @@ public class TsscGame implements Serializable {
 		return this.adminPassword;
 	}
 
+	
 	public void setAdminPassword(String adminPassword) {
 		this.adminPassword = adminPassword;
 	}

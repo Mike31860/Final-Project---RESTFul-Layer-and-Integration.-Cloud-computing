@@ -2,6 +2,8 @@ package com.example.demo.Service;
 
 import java.util.List;
 
+
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -11,7 +13,7 @@ import com.example.demo.DAOS.TopicDao;
 import com.example.demo.Model.TsscStory;
 import com.example.demo.Model.TsscTimecontrol;
 import com.example.demo.Model.TsscTopic;
-import com.example.demo.Repository.TopicRepository;
+
 
 @Service
 public class TopicServiceImpt implements TopicService {
@@ -118,6 +120,7 @@ public class TopicServiceImpt implements TopicService {
 	}
 
 	@Override
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED, rollbackFor=Exception.class)
 	public void actualizar(TsscTopic topic) {
 		repositorio.actualizar(topic);
 		

@@ -1,6 +1,8 @@
 package com.example.demo.RestController;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -26,7 +28,7 @@ public class GameRestController  implements GameController{
 	}	
 	
 	@Override
-	@PostMapping("/api/games/")
+	@PostMapping("/api/games")
 	public TsscGame AnadirGame(@RequestBody TsscGame gameOne) {
 		// TODO Auto-generated method stub
 		if(gameOne.getTsscTopic()==null) {
@@ -36,14 +38,14 @@ public class GameRestController  implements GameController{
 			return service.AnadirGameConTema(gameOne, gameOne.getTsscTopic().getId());
 		}
 	}
-	
+	//funciona
 	@Override
 	@GetMapping("/api/games/{id}")
 	public TsscGame findGameById(@PathVariable long id) {
 		// TODO Auto-generated method stub
 		return service.findGameById(id);
 	}
-	
+	//funciona
 	@Override
 	@GetMapping("/api/games")
 	public Iterable<TsscGame> findAlll() {
@@ -51,6 +53,7 @@ public class GameRestController  implements GameController{
 		return service.findAlll();
 	}
 
+	//funciona
 	@Override
 	@DeleteMapping("/api/games/{id}")
 	public TsscGame eliminarGame(@PathVariable long id) {

@@ -1,6 +1,8 @@
 package com.example.demo.Service;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.example.demo.Model.TsscGame;
 import com.example.demo.Model.TsscStory;

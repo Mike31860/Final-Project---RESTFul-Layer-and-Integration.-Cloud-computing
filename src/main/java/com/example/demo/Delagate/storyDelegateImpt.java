@@ -26,7 +26,7 @@ public class storyDelegateImpt implements storyDelegate {
 	
 	@Override
 	public TsscStory guardar(TsscStory nuevo) {
-		TsscStory encontrado= restTemplate.postForEntity(SERVER +"api/games", nuevo, TsscStory.class).getBody();
+		TsscStory encontrado= restTemplate.postForEntity(SERVER +"api/stories/games/"+nuevo.getTsscGame().getId(), nuevo, TsscStory.class).getBody();
 		return encontrado;
 	}
 

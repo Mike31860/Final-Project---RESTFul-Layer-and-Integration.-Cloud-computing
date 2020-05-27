@@ -31,15 +31,15 @@ public class GameDelegateImpt implements GameDelegate{
 	///hello
 
 	@Override
-	public void actualizar(TsscGame entity) {
+	public TsscGame actualizar(TsscGame entity) {
 		// TODO Auto-generated method stub
-		restTemplate.patchForObject(SERVER+"api/games", entity, TsscGame.class);
-		
+		TsscGame encontrado= restTemplate.patchForObject(SERVER+"api/games", entity, TsscGame.class);
+		return encontrado;
 	}
 
 	@Override
-	public void eliminar(TsscGame entity) {
-		restTemplate.delete(SERVER+"api/games/"+entity.getId());
+	public void eliminar(Long id) {
+		restTemplate.delete(SERVER+"api/games/"+id);
 		
 	}
 
