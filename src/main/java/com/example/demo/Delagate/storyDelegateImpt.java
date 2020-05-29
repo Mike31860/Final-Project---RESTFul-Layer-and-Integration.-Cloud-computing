@@ -31,10 +31,10 @@ public class storyDelegateImpt implements storyDelegate {
 	}
 
 	@Override
-	public void actualizar(TsscStory entity) {
+	public TsscStory actualizar(TsscStory entity) {
 		// TODO Auto-generated method stub
-		restTemplate.patchForObject(SERVER+"api/stories", entity, TsscStory.class);
-	
+		TsscStory encontrado=restTemplate.patchForObject(SERVER+"api/stories", entity, TsscStory.class);
+		return encontrado;
 	}
 
 	@Override

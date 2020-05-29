@@ -20,8 +20,8 @@ public class StoryDaoImpt implements StoryDao {
 
 	@Override
 	public TsscStory guardar(TsscStory entity) {
-	  // entityManager.persist(entity);
-	entityManager.merge(entity);
+	   entityManager.persist(entity);
+	//entityManager.merge(entity);
 		return entity;
 	}
 

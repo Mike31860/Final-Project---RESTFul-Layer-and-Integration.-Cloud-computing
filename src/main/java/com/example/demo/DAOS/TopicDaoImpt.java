@@ -23,10 +23,9 @@ public class TopicDaoImpt implements TopicDao {
 	private EntityManager entityManager;
 
 	@Override
-	public TsscTopic guardar(TsscTopic entity) {
-
-		//entityManager.persist(entity);
-		entityManager.merge(entity);
+	public TsscTopic guardar(TsscTopic entity) {	
+		entityManager.persist(entity);
+	
 		return entity;
 	}
 

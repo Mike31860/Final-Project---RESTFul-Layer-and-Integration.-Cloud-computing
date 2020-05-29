@@ -24,8 +24,8 @@ public class GameDaoImpt implements GameDao{
 	@Override
 	public TsscGame guardar(TsscGame entity) {
 		
-		//entityManager.persist(entity);
-		entityManager.merge(entity);
+		entityManager.persist(entity);
+		//entityManager.merge(entity);
 		return entity;
 	}
 

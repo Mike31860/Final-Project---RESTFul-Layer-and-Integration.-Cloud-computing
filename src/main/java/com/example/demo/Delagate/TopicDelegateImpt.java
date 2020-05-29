@@ -4,8 +4,11 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 
+import com.example.demo.Model.TsscGame;
 import com.example.demo.Model.TsscTopic;
 
 @Component
@@ -20,6 +23,7 @@ public class TopicDelegateImpt implements TopicDelegate {
 	}
 
 	@Override
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED, rollbackFor=Exception.class)
 	public TsscTopic guardar(TsscTopic nuevo) {
 		TsscTopic encontrado= restTemplate.postForEntity(SERVER +"api/topics", nuevo, TsscTopic.class).getBody();
 		return encontrado;
@@ -27,8 +31,8 @@ public class TopicDelegateImpt implements TopicDelegate {
 
 	@Override
 	public TsscTopic actualizar(TsscTopic entity) {
-		// TODO Auto-generated method stub
-		return null;
+		TsscTopic encontrado= restTemplate.patchForObject(SERVER+"api/topics", entity, TsscTopic.class);
+		return encontrado;
 	}
 
 	@Override

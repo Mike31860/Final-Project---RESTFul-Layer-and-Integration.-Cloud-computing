@@ -35,7 +35,7 @@ class TsscTopicTestMockU {
 
 		tsstopic.setDefaultGroups(0);
 		tsstopic.setDefaultSprints(4);
-		topicServiceImp.AnadirTopic(tsstopic);
+	//	topicServiceImp.AnadirTopic(tsstopic);
 		Long id = tsstopic.getId();
 		when(repo.existsById(id)).thenReturn(false);
 		assertFalse(topicServiceImp.existeById(id));

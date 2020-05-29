@@ -1,5 +1,7 @@
 package com.example.demo.DAOS;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
@@ -19,8 +21,8 @@ public class TimeControllerDaoImpt implements TimeControllerDao{
 
 	@Override
 	public  TsscTimecontrol save(TsscTimecontrol entity) {
-		//entityManager.persist(entity);
-		entityManager.merge(entity);
+		entityManager.persist(entity);
+		//entityManager.merge(entity);
 		return entity;
 	}
 
@@ -40,6 +42,12 @@ public class TimeControllerDaoImpt implements TimeControllerDao{
 	public TsscTimecontrol findById(long id) {
 		// TODO Auto-generated method stub
 		return entityManager.find(TsscTimecontrol.class, id);
+	}
+
+	@Override
+	public List<TsscTimecontrol> findAll() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
