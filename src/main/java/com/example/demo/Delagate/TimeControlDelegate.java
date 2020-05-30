@@ -3,7 +3,7 @@ package com.example.demo.Delagate;
 import com.example.demo.Model.TsscTimecontrol;
 import com.example.demo.Model.TsscTopic;
 
-public interface TimeControllerDelegate {
+public interface TimeControlDelegate {
 	
 	
 	public TsscTimecontrol guardar(TsscTimecontrol entity);

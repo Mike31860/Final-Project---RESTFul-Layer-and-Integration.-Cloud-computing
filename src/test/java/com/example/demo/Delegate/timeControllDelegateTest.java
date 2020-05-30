@@ -8,39 +8,49 @@ import java.time.LocalTime;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.client.RestTemplate;
 
 import com.example.demo.DAOS.TimeControllerDaoImpt;
-import com.example.demo.Delagate.TimeControllerDelegate;
+import com.example.demo.Delagate.GameDelegateImpt;
+import com.example.demo.Delagate.TimeControlDelegate;
+import com.example.demo.Delagate.TimeControlDelegateImp;
 import com.example.demo.Model.TsscTimecontrol;
+import com.example.demo.Model.TsscTopic;
 import com.example.demo.Service.TimeControlServiceImpt;
-
+import com.example.demo.Service.TopicServiceImpt;
+@ExtendWith(SpringExtension.class)
+@RunWith(MockitoJUnitRunner.class)
 @SpringBootTest
 class timeControllDelegateTest {
 	
-	@Autowired
-	@InjectMocks
-	private TimeControlServiceImpt TimeServiceImp;
+	final String SERVER="http://localhost:8080/";
 	
 	@Mock
-	private TimeControllerDelegate delegate;
+	private RestTemplate restTemplate;
 	
-	@BeforeEach
-	public void before() {
-		MockitoAnnotations.initMocks(this);
+	
+	@InjectMocks
+	private TimeControlDelegateImp timeControlDelegate;
+	
+    @Autowired
+	public timeControllDelegateTest(TimeControlDelegateImp timeControlDelegate) {
+		this.timeControlDelegate = timeControlDelegate;
 	}
-	
 	
 
 	@Test
-	@Transactional(readOnly=false, propagation=Propagation.REQUIRED, rollbackFor=Exception.class)
-	void GuardarTimeControllerTest() {
+	void GuardarTimeControlTest() {
 		
 		TsscTimecontrol nuevo= new TsscTimecontrol();
 		nuevo.setAutostart("Miguel");
@@ -51,14 +61,13 @@ class timeControllDelegateTest {
 		nuevo.setIntervalRunning(BigDecimal.TEN);
 		nuevo.setType("ME");
 		nuevo.setTimeInterval(BigDecimal.valueOf(23));
-		when(delegate.guardar(nuevo)).thenReturn(nuevo);
-		assertNotNull(TimeServiceImp.AnadirTimeControl(nuevo));
+		when(restTemplate.postForObject(SERVER +"api/times", nuevo, TsscTimecontrol.class)).thenReturn(nuevo);
+		assertNotNull(timeControlDelegate.guardar(nuevo));
 		
 	}
 	
 	@Test
-	@Transactional(readOnly=false, propagation=Propagation.REQUIRED, rollbackFor=Exception.class)
-	void EliminarTimeControllerTest() {
+	void actualizarTimeControlTest() {
 		
 		TsscTimecontrol nuevo= new TsscTimecontrol();
 		nuevo.setAutostart("Miguel");
@@ -69,18 +78,16 @@ class timeControllDelegateTest {
 		nuevo.setIntervalRunning(BigDecimal.TEN);
 		nuevo.setType("ME");
 		nuevo.setTimeInterval(BigDecimal.valueOf(23));
-		when(delegate.guardar(nuevo)).thenReturn(nuevo);
-		assertNotNull(TimeServiceImp.AnadirTimeControl(nuevo));
-		delegate.eliminar(nuevo);
-		TimeServiceImp.eliminarTime(nuevo);
-		assertNull(TimeServiceImp.findTimeById(nuevo.getId()));
-		
+		when(restTemplate.postForObject(SERVER +"api/times", nuevo, TsscTimecontrol.class)).thenReturn(nuevo);
+		assertNotNull(timeControlDelegate.guardar(nuevo));
+		nuevo.setName("hey");
+		when(restTemplate.patchForObject(SERVER+"api/times", nuevo, TsscTimecontrol.class)).thenReturn(nuevo);
+		assertNotNull(timeControlDelegate.actualizar(nuevo));
 		
 	}
 	
 	@Test
-	@Transactional(readOnly=false, propagation=Propagation.REQUIRED, rollbackFor=Exception.class)
-	void EditarTimeControllerTest() {
+	void eliminarTimeControlTest() {
 		
 		TsscTimecontrol nuevo= new TsscTimecontrol();
 		nuevo.setAutostart("Miguel");
@@ -91,28 +98,56 @@ class timeControllDelegateTest {
 		nuevo.setIntervalRunning(BigDecimal.TEN);
 		nuevo.setType("ME");
 		nuevo.setTimeInterval(BigDecimal.valueOf(23));
-		when(delegate.guardar(nuevo)).thenReturn(nuevo);
-		assertNotNull(TimeServiceImp.AnadirTimeControl(nuevo));
-		assertNotNull(TimeServiceImp.findTimeById(nuevo.getId()));
-		nuevo.setAutostart("Nelson");
-		nuevo.setOrder(BigDecimal.valueOf(85));
-		nuevo.setLastPlayTime(LocalTime.now());
-		nuevo.setName("Segundo");
-		nuevo.setState("HEY2");
-		nuevo.setIntervalRunning(BigDecimal.valueOf(75));
-		nuevo.setType("MEyu");
-		nuevo.setTimeInterval(BigDecimal.valueOf(29));
-		when(delegate.actualizar(nuevo)).thenReturn(nuevo);
-		assertEquals(nuevo.getAutostart(),TimeServiceImp.findTimeById(nuevo.getId()).getAutostart());
-		assertEquals(nuevo.getOrder(),TimeServiceImp.findTimeById(nuevo.getId()).getOrder());
-		assertEquals(nuevo.getLastPlayTime(),TimeServiceImp.findTimeById(nuevo.getId()).getLastPlayTime());
-		assertEquals(nuevo.getName(),TimeServiceImp.findTimeById(nuevo.getId()).getName());
-		assertEquals(nuevo.getState(),TimeServiceImp.findTimeById(nuevo.getId()).getState());
-		assertEquals(nuevo.getIntervalRunning(),TimeServiceImp.findTimeById(nuevo.getId()).getIntervalRunning());
-		assertEquals(nuevo.getType(),TimeServiceImp.findTimeById(nuevo.getId()).getType());
-		assertEquals(nuevo.getTimeInterval(),TimeServiceImp.findTimeById(nuevo.getId()).getTimeInterval());
-		
+		when(restTemplate.postForObject(SERVER +"api/times", nuevo, TsscTimecontrol.class)).thenReturn(nuevo);
+		assertNotNull(timeControlDelegate.guardar(nuevo));
+		restTemplate.delete(SERVER+"api/times/"+nuevo.getId());
+		timeControlDelegate.eliminar(nuevo);
+		assertNull(timeControlDelegate.findById(nuevo.getId()));
+	
 		
 	}
+	
+	
+	
+	
+	
+	
+//	
+//	@Test
+//	@Transactional(readOnly=false, propagation=Propagation.REQUIRED, rollbackFor=Exception.class)
+//	void EditarTimeControllerTest() {
+//		
+//		TsscTimecontrol nuevo= new TsscTimecontrol();
+//		nuevo.setAutostart("Miguel");
+//		nuevo.setOrder(BigDecimal.ONE);
+//		nuevo.setLastPlayTime(LocalTime.now());
+//		nuevo.setName("Primero");
+//		nuevo.setState("HEY");
+//		nuevo.setIntervalRunning(BigDecimal.TEN);
+//		nuevo.setType("ME");
+//		nuevo.setTimeInterval(BigDecimal.valueOf(23));
+//		when(delegate.guardar(nuevo)).thenReturn(nuevo);
+//		assertNotNull(TimeServiceImp.AnadirTimeControl(nuevo));
+//		assertNotNull(TimeServiceImp.findTimeById(nuevo.getId()));
+//		nuevo.setAutostart("Nelson");
+//		nuevo.setOrder(BigDecimal.valueOf(85));
+//		nuevo.setLastPlayTime(LocalTime.now());
+//		nuevo.setName("Segundo");
+//		nuevo.setState("HEY2");
+//		nuevo.setIntervalRunning(BigDecimal.valueOf(75));
+//		nuevo.setType("MEyu");
+//		nuevo.setTimeInterval(BigDecimal.valueOf(29));
+//		when(delegate.actualizar(nuevo)).thenReturn(nuevo);
+//		assertEquals(nuevo.getAutostart(),TimeServiceImp.findTimeById(nuevo.getId()).getAutostart());
+//		assertEquals(nuevo.getOrder(),TimeServiceImp.findTimeById(nuevo.getId()).getOrder());
+//		assertEquals(nuevo.getLastPlayTime(),TimeServiceImp.findTimeById(nuevo.getId()).getLastPlayTime());
+//		assertEquals(nuevo.getName(),TimeServiceImp.findTimeById(nuevo.getId()).getName());
+//		assertEquals(nuevo.getState(),TimeServiceImp.findTimeById(nuevo.getId()).getState());
+//		assertEquals(nuevo.getIntervalRunning(),TimeServiceImp.findTimeById(nuevo.getId()).getIntervalRunning());
+//		assertEquals(nuevo.getType(),TimeServiceImp.findTimeById(nuevo.getId()).getType());
+//		assertEquals(nuevo.getTimeInterval(),TimeServiceImp.findTimeById(nuevo.getId()).getTimeInterval());
+//		
+//		
+//	}
 
 }
