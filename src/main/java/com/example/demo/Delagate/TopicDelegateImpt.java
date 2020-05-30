@@ -23,9 +23,8 @@ public class TopicDelegateImpt implements TopicDelegate {
 	}
 
 	@Override
-	@Transactional(readOnly=false, propagation=Propagation.REQUIRED, rollbackFor=Exception.class)
 	public TsscTopic guardar(TsscTopic nuevo) {
-		TsscTopic encontrado= restTemplate.postForEntity(SERVER +"api/topics", nuevo, TsscTopic.class).getBody();
+		TsscTopic encontrado= restTemplate.postForObject(SERVER +"api/topics", nuevo, TsscTopic.class);
 		return encontrado;
 	}
 

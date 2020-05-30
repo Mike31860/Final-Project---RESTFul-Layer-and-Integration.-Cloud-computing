@@ -3,51 +3,51 @@ package com.example.demo.Delegate;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
-import java.util.ArrayList;
 
-import org.junit.jupiter.api.BeforeEach;
+
+
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+
 import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import com.example.demo.DAOS.TopicDao;
-import com.example.demo.Delagate.TopicDelegate;
+import org.springframework.web.client.RestTemplate;
+
+
 import com.example.demo.Delagate.TopicDelegateImpt;
 import com.example.demo.Model.TsscTopic;
-import com.example.demo.Service.TopicServiceImpt;
 
-import lombok.extern.java.Log;
 
-@SpringBootTest
+@ExtendWith(SpringExtension.class)
 @RunWith(MockitoJUnitRunner.class)
+@SpringBootTest
 class topicDelegateTest {
 
-
-	@InjectMocks
-	private TopicServiceImpt topicServiceImp;
+    
+	final String SERVER="http://localhost:8080/";
 	
 	@Mock
-	private TopicDelegate delegate;
+	private RestTemplate restTemplate;
 	
-    @Autowired
-	public topicDelegateTest(TopicServiceImpt topicServiceImp, TopicDelegate delegate) {
-		super();
+	
+	@InjectMocks
+	private TopicDelegateImpt topicServiceImp;
+	
+
+	@Autowired
+	public topicDelegateTest(TopicDelegateImpt topicServiceImp) {
 		this.topicServiceImp = topicServiceImp;
-		this.delegate = delegate;
 	}
-	@BeforeEach
-	public void before() {
-		MockitoAnnotations.initMocks(this);
-	}
+
+
+
 	@Test
-	@Transactional(readOnly=false, propagation=Propagation.REQUIRED, rollbackFor=Exception.class)
 	void testAnadirTopic() {
 
         TsscTopic topic= new TsscTopic();
@@ -55,81 +55,61 @@ class topicDelegateTest {
         topic.setDefaultSprints(2);
         topic.setDescription("Primer Tema");
         topic.setName("Miguel");
-        when(delegate.guardar(topic)).thenReturn(topic);
-		when(delegate.findById(topic.getId())).thenReturn(topic);
-		assertNotNull(topicServiceImp.AnadirTopic(topic));
-		
-		
+        when(restTemplate.postForObject("http://localhost:8080/api/topics", topic, TsscTopic.class)).thenReturn(topic);
+        when(restTemplate.getForObject(SERVER+"api/topics/"+topic.getId(), TsscTopic.class )).thenReturn(topic);
+		assertNotNull(topicServiceImp.guardar(topic));	
 
 	}
 	
 	@Test
-	@Transactional(readOnly=false, propagation=Propagation.REQUIRED, rollbackFor=Exception.class)
 	public void testactualiarTopic() {
 	   
-		TsscTopic topic= new TsscTopic();
-		topic.setDefaultGroups(2);
-		topic.setDefaultSprints(2);
-		topic.setDescription("Primer Tema");
-		topic.setName("Miguel");		
-		//topicDelegate.guardar(carTwo);
-		when(delegate.guardar(topic)).thenReturn(topic);					
-		when(delegate.findById(topic.getId())).thenReturn(topic);
-		assertNotNull(topicServiceImp.AnadirTopic(topic));
-		topic.setName("Nelson");
-		when(delegate.actualizar(topic)).thenReturn(topic);
-		topicServiceImp.actualizar(topic);
-		assertEquals(topicServiceImp.findTopicById(topic.getId()).getName(), "Nelson");
+		    TsscTopic topic= new TsscTopic();
+	        topic.setDefaultGroups(2);
+	        topic.setDefaultSprints(2);
+	        topic.setDescription("Primer Tema");
+	        topic.setName("Miguel");
+	        when(restTemplate.postForObject("http://localhost:8080/api/topics", topic, TsscTopic.class)).thenReturn(topic);
+	        assertNotNull(topicServiceImp.guardar(topic));
+	        topic.setName("nelson");
+	        when(restTemplate.patchForObject(SERVER+"api/topics", topic, TsscTopic.class)).thenReturn(topic);
+	        
+	        assertNotNull(topicServiceImp.actualizar(topic));
+	        
 	
 		
 	}
-	
+//	
 	@Test
-	@Transactional(readOnly=false, propagation=Propagation.REQUIRED, rollbackFor=Exception.class)
 	public void testEliminarTopic() {
-	   
-		TsscTopic topic= new TsscTopic();
-		topic.setDefaultGroups(2);
-		topic.setDefaultSprints(2);
-		topic.setDescription("Primer Tema");
-		topic.setName("Miguel");		
-		//topicDelegate.guardar(carTwo);
-		when(delegate.guardar(topic)).thenReturn(topic);				
-		when(delegate.findById(topic.getId())).thenReturn(topic);
-		assertNotNull(topicServiceImp.AnadirTopic(topic));
-		delegate.eliminar(topic);
-		when(delegate.findById(topic.getId())).thenReturn(null);
-		topicServiceImp.eliminarTopic(topic);
-		assertNull(topicServiceImp.findTopicById(topic.getId()));
-	
+		   TsscTopic topic= new TsscTopic();
+	        topic.setDefaultGroups(2);
+	        topic.setDefaultSprints(2);
+	        topic.setDescription("Primer Tema");
+	        topic.setName("Miguel");
+	        when(restTemplate.postForObject("http://localhost:8080/api/topics", topic, TsscTopic.class)).thenReturn(topic);
+	        assertNotNull(topicServiceImp.guardar(topic));
+	        restTemplate.delete(SERVER+"api/topics/"+topic.getId());
+	        when(restTemplate.getForObject(SERVER+"api/topics/"+topic.getId(), TsscTopic.class )).thenReturn(null);
+	        assertNull(topicServiceImp.findById(topic.getId()));
+	        
+	        
 		
 	}
-	
+//	
 	@Test
-	@Transactional(readOnly=false, propagation=Propagation.REQUIRED, rollbackFor=Exception.class)
 	public void testObtenerTopic() {
 	   
-		ArrayList<TsscTopic> topis= new ArrayList<TsscTopic>();
-		TsscTopic carTwo= new TsscTopic();
-		carTwo.setDefaultGroups(2);
-		carTwo.setDefaultSprints(2);
-		carTwo.setDescription("Primer Tema");
-		carTwo.setName("Miguel");		
-		//topicDelegate.guardar(carTwo);
-		topis.add(carTwo);
-		
-		TsscTopic carThree= new TsscTopic();
-		carThree.setDefaultGroups(2);
-		carThree.setDefaultSprints(2);
-		carThree.setDescription("Primer Tema");
-		carThree.setName("wdsd");		
-		//topicDelegate.guardar(carTwo);
-		topis.add(carThree);
-		
-		when(delegate.findAll()).thenReturn(topis);
-
-		
-		assertNotNull(delegate.findAll());
+		   TsscTopic topic= new TsscTopic();
+	        topic.setDefaultGroups(2);
+	        topic.setDefaultSprints(2);
+	        topic.setDescription("Primer Tema");
+	        topic.setName("Miguel");
+	        when(restTemplate.postForObject("http://localhost:8080/api/topics", topic, TsscTopic.class)).thenReturn(topic);
+	        assertNotNull(topicServiceImp.guardar(topic));
+	        when(restTemplate.getForObject(SERVER+"api/topics/"+topic.getId(), TsscTopic.class )).thenReturn(topic);
+	        assertNotNull(topicServiceImp.findById(topic.getId()));
+	        
 	
 		
 	}

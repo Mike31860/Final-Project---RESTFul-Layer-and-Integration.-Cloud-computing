@@ -26,7 +26,7 @@ public class storyDelegateImpt implements storyDelegate {
 	
 	@Override
 	public TsscStory guardar(TsscStory nuevo) {
-		TsscStory encontrado= restTemplate.postForEntity(SERVER +"api/stories/games/"+nuevo.getTsscGame().getId(), nuevo, TsscStory.class).getBody();
+		TsscStory encontrado= restTemplate.postForObject(SERVER +"api/stories/"+nuevo.getTsscGame().getId(), nuevo, TsscStory.class);
 		return encontrado;
 	}
 
@@ -40,8 +40,7 @@ public class storyDelegateImpt implements storyDelegate {
 	@Override
 	public void eliminar(TsscStory nuevo) {
 		restTemplate.delete(SERVER+"api/stories/"+nuevo.getId());
-		
-		
+	
 	}
 
 	@Override

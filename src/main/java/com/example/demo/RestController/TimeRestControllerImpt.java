@@ -25,7 +25,7 @@ public class TimeRestControllerImpt implements TimeRestController{
 	}
 
 	@Override
-	@GetMapping("/api/topics/{id}")
+	@GetMapping("/api/times/{id}")
 	public TsscTimecontrol findTimeControlById(long id) {
 		// TODO Auto-generated method stub
 		return service.findTimeById(id);

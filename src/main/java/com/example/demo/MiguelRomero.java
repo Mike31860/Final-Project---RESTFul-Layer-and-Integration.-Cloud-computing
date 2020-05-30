@@ -22,8 +22,6 @@ import com.example.demo.Service.GameService;
 import com.example.demo.Service.StoryService;
 import com.example.demo.Service.TopicService;
 
-
-
 @SpringBootApplication
 public class MiguelRomero {
 
