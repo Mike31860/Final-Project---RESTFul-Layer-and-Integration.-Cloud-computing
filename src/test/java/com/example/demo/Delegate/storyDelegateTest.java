@@ -114,7 +114,9 @@ class storyDelegateTest {
 		assertNotNull(storyServiceImp.guardar(story));
 		story.setDescription("MIGUELDDD");
 		when(restTemplate.patchForObject(SERVER+"api/stories", story, TsscStory.class)).thenReturn(story);
-		//assertNotNull(storyServiceImp.actualizar(story));
+		storyServiceImp.actualizar(story);
+		when(restTemplate.getForObject(SERVER+"api/stories/"+story.getId(), TsscStory.class )).thenReturn(story);
+		assertEquals(storyServiceImp.encontrarPorId(story.getId()).getDescription(), "MIGUELDDD");
 		
 	}
 	
@@ -125,11 +127,6 @@ class storyDelegateTest {
 		story.setBusinessValue(BigDecimal.valueOf(1));
 		story.setInitialSprint(BigDecimal.valueOf(1));
 		story.setPriority(BigDecimal.valueOf(1));
-		
-		
-		
-		
-		
 		
 		List<TsscStory> st = new ArrayList<TsscStory>();	       
 		TsscGame gameOne = new TsscGame();

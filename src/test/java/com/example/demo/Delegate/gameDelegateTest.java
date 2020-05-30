@@ -113,7 +113,10 @@ class gameDelegateTest {
 		gameOne.setName("Nelson");
 		gameOne.setNSprints(25);
 		when(restTemplate.patchForObject(SERVER+"api/games", gameOne, TsscGame.class)).thenReturn(gameOne);
-	//	assertNotNull(gameServiceImp.actualizar(gameOne));
+	    gameServiceImp.actualizar(gameOne);
+	    when(restTemplate.getForObject(SERVER+"api/games/"+gameOne.getId(), TsscGame.class )).thenReturn(gameOne);
+	    assertEquals(gameServiceImp.encontrarPorId(gameOne.getId()).getName(), "Nelson");
+	    assertEquals(gameServiceImp.encontrarPorId(gameOne.getId()).getNSprints(), 25);
 		
 
 

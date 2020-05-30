@@ -73,8 +73,9 @@ class topicDelegateTest {
 	        assertNotNull(topicServiceImp.guardar(topic));
 	        topic.setName("nelson");
 	        when(restTemplate.patchForObject(SERVER+"api/topics", topic, TsscTopic.class)).thenReturn(topic);
-	        
-	    //    assertNotNull(topicServiceImp.actualizar(topic));
+	        topicServiceImp.actualizar(topic);
+	        when(restTemplate.getForObject(SERVER+"api/topics/"+topic.getId(), TsscTopic.class )).thenReturn(topic);
+	        assertEquals(topicServiceImp.findById(topic.getId()).getName(),"nelson");
 	        
 	
 		
