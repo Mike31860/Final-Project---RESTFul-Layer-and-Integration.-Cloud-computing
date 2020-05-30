@@ -13,12 +13,14 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 
 import com.example.demo.Validate.GameValidar;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -62,11 +64,13 @@ public class TsscGame implements Serializable {
 
 	@NotNull(message = "Ingresa una fecha",  groups=GameValidar.class)
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	@JsonFormat(pattern = "yyyy-MM-dd")
 	@Column(name = "SCHEDULED_DATE")
 	private LocalDate scheduledDate;
 
 	@NotNull(message  = "Ingrear una hora",  groups=GameValidar.class)
 	@Column(name = "SCHEDULED_TIME")
+	@JsonFormat(pattern = "HH:mm")
 	private LocalTime scheduledTime;
 
 	@Column(name = "START_TIME")
@@ -102,7 +106,7 @@ public class TsscGame implements Serializable {
 
 	// bi-directional many-to-one association to TsscStory
 
-	@OneToMany( fetch = FetchType.EAGER,mappedBy = "tsscGame")
+	@OneToMany(mappedBy = "tsscGame")
 	@JsonIgnore
 	private List<TsscStory> tsscStories;
 	
@@ -118,6 +122,7 @@ public class TsscGame implements Serializable {
 	@Autowired
 	public TsscGame() {
 		
+		tsscStories=new ArrayList<TsscStory>();
     
 		
 	}

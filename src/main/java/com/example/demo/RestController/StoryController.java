@@ -5,7 +5,7 @@ import com.example.demo.Model.TsscStory;
 public interface StoryController {
 
 	public TsscStory AnadirStory(TsscStory Story, long id);
-	public TsscStory ActualizarStory(TsscStory Story);
+	public void ActualizarStory(TsscStory Story);
 	public TsscStory findStoryById(long id);
 //	public boolean existbyId(long id);
 	

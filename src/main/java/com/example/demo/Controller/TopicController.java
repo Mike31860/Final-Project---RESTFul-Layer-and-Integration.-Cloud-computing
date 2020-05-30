@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.example.demo.Delagate.GameDelegate;
+import com.example.demo.Delagate.TopicDelegate;
 import com.example.demo.Model.TsscGame;
 import com.example.demo.Model.TsscTopic;
 import com.example.demo.Service.GameService;
@@ -23,18 +25,18 @@ import com.example.demo.Validate.TopicValidar;
 @Controller
 public class TopicController {
 
-	private TopicService servicio;
-	private GameService servicio2;
+	private TopicDelegate servicio;
+	private GameDelegate servicio2;
 
 	@Autowired
-	public TopicController(TopicService Service, GameService es) {
+	public TopicController(TopicDelegate Service, GameDelegate es) {
 		this.servicio = Service;
 		this.servicio2 = es;
 	}
 
 	@GetMapping("/TemaCap/")
 	public String principalTopic(Model model) {
-		model.addAttribute("topics", servicio.findAlll());
+		model.addAttribute("topics", servicio.findAll());
 		return "TemaCap/principalTopic";
 	}
 
@@ -46,7 +48,7 @@ public class TopicController {
 
 	@GetMapping("/TemaCap/editar/{id}")
 	public String mostrarGameAEditarPrincipal(@PathVariable("id") long id, Model modeloPrincipal) {
-		TsscTopic topic = servicio.findTopicById(id);
+		TsscTopic topic = servicio.findById(id);
 		if (topic == null)
 			throw new IllegalArgumentException("Id del juego Invalido:" + id);
 
@@ -77,7 +79,7 @@ public class TopicController {
 				return "TemaCap/EditarTopic";
 			} else {
 
-				servicio.AnadirTopic(tema);
+				servicio.actualizar(tema);
 
 				return "redirect:/TemaCap/";
 
@@ -104,14 +106,14 @@ public class TopicController {
 				return "TemaCap/agregarTopic";
 			} else {
 
-				servicio.AnadirTopic(agregar);
+				servicio.guardar(agregar);
 				return "redirect:/TemaCap/";
 
 			}
 
 		} else {
 
-			modeloPrincipal.addAttribute("topics", servicio.findAlll());
+			modeloPrincipal.addAttribute("topics", servicio.findAll());
 			return "TemaCap/principalTopic";
 		}
 
@@ -119,16 +121,16 @@ public class TopicController {
 
 	@GetMapping("/TemaCap/eliminar/{id}")
 	public String deleteTopic(@PathVariable("id") long id) {
-		TsscTopic encontrado = servicio.findTopicById(id);
+		TsscTopic encontrado = servicio.findById(id);
 
-		for (TsscGame juegos : servicio2.findAlll()) {
+		for (TsscGame juegos : servicio2.findAll()) {
 			if (juegos.getTsscTopic() != null && juegos.getTsscTopic().equals(encontrado)) {
 				juegos.setTsscTopic(null);
 			}
 
 		}
 
-		servicio.eliminarTopic(encontrado);
+		servicio.eliminar(encontrado);
 		return "redirect:/";
 	}
 //

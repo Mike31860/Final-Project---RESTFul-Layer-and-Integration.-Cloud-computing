@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -26,10 +27,12 @@ public class StoryGameRestController implements StoryController{
 	}
 
 	@Override
-	@PatchMapping("/api/stories")
-	public TsscStory ActualizarStory(@RequestBody TsscStory Story) {
+	@PutMapping("/api/stories")
+	public void ActualizarStory(@RequestBody TsscStory Story) {
 		// TODO Auto-generated method stub
-		return service.ActualizarStory(Story, Story.getDescription(), Story.getAltDescripton());
+	service.ActualizarStory(Story, Story.getDescription(), Story.getAltDescripton());
+
+	
 	}
 
 	@Override

@@ -1,6 +1,7 @@
 package com.example.demo;
 
 import java.math.BigDecimal;
+import java.text.DateFormat;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -87,10 +88,25 @@ public class MiguelRomero {
        TsscGame gameOne = new TsscGame();
 		
 		ArrayList<TsscGame> lista= new ArrayList<TsscGame>();
+		
+		ArrayList<TsscGameAdmin> lista22= new ArrayList<TsscGameAdmin>();
 
 		gameOne.setNGroups(1);
 		gameOne.setNSprints(1);
+		gameOne.setName("nelsn");
+		gameOne.setAdminPassword("123456");
+		gameOne.setScheduledDate(LocalDate.now());
+		gameOne.setScheduledTime(LocalTime.now());
+		//gameOne.setStartTime(LocalTime.NOON);
+		gameOne.setUserPassword("456");
+		gameOne.setGuestPassword("123456");
+		gameOne.setTsscGameAdmins(lista22);
 
+
+		
+		
+		
+		
 		TsscTopic tema = new TsscTopic();
 		tema.setDefaultGroups(1);
 		tema.setDefaultSprints(1);
@@ -101,13 +117,16 @@ public class MiguelRomero {
 		//gameService.AnadirGameConTema(gameOne, tema.getId()); 
 	    List<TsscStory> st = new ArrayList<TsscStory>();
 	    gameOne.setTsscStories(st);
+	    
 	    TsscStory his = new TsscStory();
 	    his.setBusinessValue(BigDecimal.valueOf(2));
 	    his.setInitialSprint(BigDecimal.valueOf(1));
 	    his.setPriority(BigDecimal.valueOf(1));
+	    his.setDescription("hey");
+	    
 	    storyserv.AnadirStory(his, gameOne.getId());
 	 
-	    	
+	    	gameOne.getTsscStories().add(his);
      
 		
 		ArrayList<TsscGameAdmin> lista2= new ArrayList<TsscGameAdmin>();
@@ -115,7 +134,7 @@ public class MiguelRomero {
 		gameTwo.setName("Miguel");
 		gameTwo.setAdminPassword("123456");
 		gameTwo.setScheduledDate(LocalDate.now());
-		gameTwo.setStartTime(LocalTime.NOON);
+		gameTwo.setScheduledTime(LocalTime.now());
 		gameTwo.setUserPassword("456");
 		gameTwo.setGuestPassword("123456");
 		gameTwo.setTsscGameAdmins(lista2);

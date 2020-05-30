@@ -8,6 +8,7 @@ import javax.validation.constraints.NotNull;
 
 import com.example.demo.Validate.GameValidar;
 import com.example.demo.Validate.StoryValidar;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -58,10 +59,12 @@ public class TsscStory implements Serializable {
 
 	// bi-directional many-to-one association to TsscAcceptanceCriteria
 	@OneToMany(mappedBy = "tsscStory")
+	@JsonIgnore
 	private List<TsscAcceptanceCriteria> tsscAcceptanceCriterias;
 
 	// bi-directional many-to-one association to TsscDeliverable
 	@OneToMany(mappedBy = "tsscStory")
+	@JsonIgnore
 	private List<TsscDeliverable> tsscDeliverables;
 
 	

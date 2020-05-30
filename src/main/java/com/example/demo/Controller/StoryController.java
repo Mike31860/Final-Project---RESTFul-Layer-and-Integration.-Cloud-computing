@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.example.demo.Delagate.GameDelegate;
+import com.example.demo.Delagate.storyDelegate;
 import com.example.demo.Model.TsscGame;
 import com.example.demo.Model.TsscStory;
 import com.example.demo.Service.GameService;
@@ -21,26 +23,26 @@ import com.example.demo.Validate.StoryValidar;
 @Controller
 public class StoryController {
 
-	private StoryService servicio;
-	private GameService gameServicio;
+	private storyDelegate servicio;
+	private GameDelegate gameServicio;
 
 	@Autowired
-	public StoryController(StoryServiceImpt Service, GameService game) {
+	public StoryController(storyDelegate Service, GameDelegate game) {
 		this.servicio = Service;
 		this.gameServicio = game;
 	}
 
 	@GetMapping("/storyCap/")
 	public String indexSroyCap(Model modelPrincipal) {
-		modelPrincipal.addAttribute("stories", servicio.findAlll());
+		modelPrincipal.addAttribute("stories", servicio.findAll());
 		return "storyCap/StoryPrincipal";
 	}
 
 	@GetMapping("/storyCap/add")
 	public String agregarStoryPrincipal(Model modelPrincipal) {
 		modelPrincipal.addAttribute("tsscStory", new TsscStory());
-		modelPrincipal.addAttribute("games", gameServicio.findAlll());
-		modelPrincipal.addAttribute("stories", servicio.findAlll());
+		modelPrincipal.addAttribute("games", gameServicio.findAll());
+		modelPrincipal.addAttribute("stories", servicio.findAll());
 		return "storyCap/agregarHistoria";
 	}
 
@@ -54,15 +56,21 @@ public class StoryController {
 				modelPrincipal.addAttribute("name", story.getBusinessValue());
 				modelPrincipal.addAttribute("name", story.getInitialSprint());
 				modelPrincipal.addAttribute("name", story.getPriority());
-
-				modelPrincipal.addAttribute("topics", servicio.findAlll());
-				modelPrincipal.addAttribute("games", gameServicio.findAlll());
+				modelPrincipal.addAttribute("topics", servicio.findAll());
+				modelPrincipal.addAttribute("games", gameServicio.findAll());
 
 				return "storyCap/agregarHistoria";
 			} else if (!bind.hasErrors()) {
 
-				TsscGame encontrado = gameServicio.findGameById(story.getTsscGame().getId());
-				servicio.AnadirStory(story, encontrado.getId());
+				TsscGame encontrado = gameServicio.encontrarPorId(story.getTsscGame().getId());
+				encontrado.addTsscStory(story);			
+				gameServicio.actualizar(encontrado);
+				
+				// gameServicio.encontrarPorId(story.getTsscGame().getId()).addTsscStory(story);
+				// servicio.AnadirStory(story, encontrado.getId());
+				// story.setTsscGame(encontrado);
+
+				servicio.guardar(story);
 
 				return "redirect:/storyCap/";
 			} else {
@@ -70,7 +78,7 @@ public class StoryController {
 			}
 		} else {
 
-			modelPrincipal.addAttribute("stories", servicio.findAlll());
+			modelPrincipal.addAttribute("stories", servicio.findAll());
 			return "storyCap/StoryPrincipal";
 		}
 
@@ -78,7 +86,8 @@ public class StoryController {
 
 	@GetMapping("/storyCap/edit/{id}")
 	public String EditarStoryPrincipal(@PathVariable("id") long id, Model modelPrincipal) {
-		TsscStory story = servicio.findStoryById(id);
+		// TsscStory story = servicio.findStoryById(id);
+		TsscStory story = servicio.encontrarPorId(id);
 
 		{
 			if (story == null)
@@ -89,7 +98,7 @@ public class StoryController {
 			modelPrincipal.addAttribute("businessValue", story.getBusinessValue());
 			modelPrincipal.addAttribute("initialSprint", story.getInitialSprint());
 			modelPrincipal.addAttribute("priority", story.getPriority());
-			modelPrincipal.addAttribute("games", gameServicio.findAlll());
+			modelPrincipal.addAttribute("games", gameServicio.findAll());
 
 			return "storyCap/EditarHistoria";
 		}
@@ -97,40 +106,40 @@ public class StoryController {
 	}
 
 	@PostMapping("/storyCap/edit/{id}")
-	public String mostrarStoryAEditar(@PathVariable("id") long id, @RequestParam(value = "action", required = true) String opcion,
+	public String mostrarStoryAEditar(@PathVariable("id") long id,
+			@RequestParam(value = "action", required = true) String opcion,
 			@Validated(StoryValidar.class) TsscStory story, BindingResult bind, Model modelPrincipal) {
 
-		if (opcion.equals("Cancelar")) {
+		if (!opcion.equals("CancelarOperacion")) {
+			if (bind.hasErrors()) {
 
-			return "redirect:/storyCap/";
-		}
+			  //  modelPrincipal.addAttribute("tsscStory", story);
+				modelPrincipal.addAttribute("description", story.getDescription());
+				modelPrincipal.addAttribute("businessValue", story.getBusinessValue());
+				modelPrincipal.addAttribute("initialSprint", story.getInitialSprint());
+				modelPrincipal.addAttribute("priority", story.getPriority());
+				modelPrincipal.addAttribute("games", gameServicio.findAll());
+				return "storyCap/EditarHistoria";
+			}
 
-		if (bind.hasErrors()) {
+			else {
 
-			//modelPrincipal.addAttribute("tsscStory", story);
-			modelPrincipal.addAttribute("description", story.getDescription());
-			modelPrincipal.addAttribute("businessValue", story.getBusinessValue());
-			modelPrincipal.addAttribute("initialSprint", story.getInitialSprint());
-			modelPrincipal.addAttribute("priority", story.getPriority());
-			modelPrincipal.addAttribute("games", gameServicio.findAlll());
-			return "storyCap/EditarHistoria";
-		}
+				// TsscGame encontrado =
+				// gameServicio.encontrarPorId(story.getTsscGame().getId());
+				// servicio.AnadirStory(story, encontrado.getId());
+				// gameServicio.encontrarPorId(story.getTsscGame().getId()).addTsscStory(story);;
+				servicio.actualizar(story);
+				return "redirect:/storyCap/";
 
-		else {
-		if (opcion != null && !opcion.equals("Cancelar")) {
-
-			TsscGame encontrado = gameServicio.findGameById(story.getTsscGame().getId());
-			servicio.AnadirStory(story, encontrado.getId());
-
-		}
+			}
 		}
 		return "redirect:/storyCap/";
 	}
 
 	@GetMapping("/storyCap/del/{id}")
 	public String deleteStory(@PathVariable("id") long id) {
-		TsscStory story = servicio.findStoryById(id);
-		servicio.eliminarStory(story);
+		TsscStory story = servicio.encontrarPorId(id);
+		servicio.eliminar(story);
 		return "redirect:/storyCap/";
 	}
 

@@ -14,6 +14,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.example.demo.Delagate.GameDelegate;
+import com.example.demo.Delagate.TopicDelegate;
+import com.example.demo.Delagate.storyDelegate;
 import com.example.demo.Model.TsscGame;
 import com.example.demo.Model.TsscStory;
 import com.example.demo.Model.TsscTopic;
@@ -28,12 +31,12 @@ import com.example.demo.Validate.TopicValidar;
 @Controller
 public class GameController {
 
-	private GameService servicio;
-	private TopicService ServiceTopic;
-	private StoryService serviceStorie;
+	private GameDelegate servicio;
+	private TopicDelegate ServiceTopic;
+	private storyDelegate serviceStorie;
 
 	@Autowired
-	public GameController(GameServiceImpt Service, TopicService topic, StoryService serviceStorie) {
+	public GameController(GameDelegate Service, TopicDelegate topic, storyDelegate serviceStorie) {
 		this.servicio = Service;
 		this.ServiceTopic = topic;
 		this.serviceStorie=serviceStorie;
@@ -41,14 +44,14 @@ public class GameController {
 
 	@GetMapping("/gameCap/")
 	public String principalGame(Model model) {
-		model.addAttribute("games", servicio.findAlll());
+		model.addAttribute("games", servicio.findAll());
 		return "gameCap/principalGame";
 	}
 
 	@GetMapping("/gameCap/add")
 	public String agregarGamePrincipal(Model model) {
 		model.addAttribute("tsscGame", new TsscGame());
-		model.addAttribute("topics", ServiceTopic.findAlll());
+		model.addAttribute("topics", ServiceTopic.findAll());
 		return "gameCap/agregarGame";
 	}
 
@@ -66,15 +69,16 @@ public class GameController {
 				modelPrincipal.addAttribute("nSprints", juego.getNSprints());
 				modelPrincipal.addAttribute("userPassword", juego.getUserPassword());
 				modelPrincipal.addAttribute("guestPassword", juego.getGuestPassword());
-				modelPrincipal.addAttribute("topics", ServiceTopic.findAlll());
+				modelPrincipal.addAttribute("topics", ServiceTopic.findAll());
 
 				return "gameCap/agregarGame";
 			} else if (!bind.hasErrors()) {
 
 				if (juego.getTsscTopic() == null) {
-					servicio.AnadirGameSinTema(juego);
+					//servicio.AnadirGameSinTema(juego);
+					servicio.guardar(juego);
 				} else if (juego.getTsscTopic() != null) {
-					servicio.AnadirGameConTema(juego, juego.getTsscTopic().getId());
+					servicio.guardar(juego);
 				}
 
 				return "redirect:/gameCap/";
@@ -83,15 +87,15 @@ public class GameController {
 			}
 		} else {
 
-			modelPrincipal.addAttribute("games", servicio.findAlll());
+			modelPrincipal.addAttribute("games", servicio.findAll());
 			return "gameCap/principalGame";
 		}
 
 	}
 
-	@GetMapping("/gameCap/edit/{99}")
+	@GetMapping("/gameCap/edit/{id}")
 	public String mostrarGameAEditarPrincipal(@PathVariable("id") long id, Model modelPrincipal) {
-		TsscGame juego = servicio.findGameById(id);
+		TsscGame juego = servicio.encontrarPorId(id);
 		if (juego == null)
 			throw new IllegalArgumentException("Id del juego Invalido:" + id);
 
@@ -104,7 +108,7 @@ public class GameController {
 		modelPrincipal.addAttribute("nSprints", juego.getNSprints());
 		modelPrincipal.addAttribute("userPassword", juego.getUserPassword());
 		modelPrincipal.addAttribute("guestPassword", juego.getGuestPassword());
-		modelPrincipal.addAttribute("topics", ServiceTopic.findAlll());
+		modelPrincipal.addAttribute("topics", ServiceTopic.findAll());
 
 		return "gameCap/EditarGame";
 	}
@@ -115,7 +119,7 @@ public class GameController {
 
 		if (opcion.equals("Cancelar")) {
 
-			modelPrincipal.addAttribute("games", servicio.findAlll());
+			modelPrincipal.addAttribute("games", servicio.findAll());
 			return "redirect:/gameCap/";
 		}
 	
@@ -131,18 +135,22 @@ public class GameController {
 			modelPrincipal.addAttribute("nSprints", juego.getNSprints());
 			modelPrincipal.addAttribute("userPassword", juego.getUserPassword());
 			modelPrincipal.addAttribute("guestPassword", juego.getGuestPassword());
-			modelPrincipal.addAttribute("topics", ServiceTopic.findAlll());
+			modelPrincipal.addAttribute("topics", ServiceTopic.findAll());
 			return "gameCap/EditarGame";
 		}
 		
 
 		if (opcion != null && !opcion.equals("Cancelar")) {
 
-			if (juego.getTsscTopic() == null) {
-				servicio.AnadirGameSinTema(juego);
-			} else if (juego.getTsscTopic() != null) {
-				servicio.AnadirGameConTema(juego, juego.getTsscTopic().getId());
-			}
+//			if (juego.getTsscTopic() == null) {
+//				//servicio.AnadirGameSinTema(juego);
+//				servicio.guardar(juego);
+//			} else if (juego.getTsscTopic() != null) {
+//				//servicio.AnadirGameConTema(juego, juego.getTsscTopic().getId());
+//				servicio.guardar(juego);
+//			}
+			
+			servicio.actualizar(juego);
 
 		}
 		return "redirect:/gameCap/";
@@ -152,23 +160,40 @@ public class GameController {
 
 	@GetMapping("/gameCap/del/{id}")
 	public String deleteGame(@PathVariable("id") long id) {
-		TsscGame juego = servicio.findGameById(id);
+		TsscGame juego = servicio.encontrarPorId(id);
 	//	juego.getTsscStories().clear();
 		
-		for (TsscStory stories : serviceStorie.findAlll()) {
+		for (TsscStory stories : serviceStorie.findAll()) {
 			if (stories.getTsscGame() != null && stories.getTsscGame().equals(juego)) {
-				serviceStorie.eliminarStory(stories);
+				//serviceStorie.eliminarStory(stories);
+				serviceStorie.eliminar(stories);
 			}
 
 		}
 		
-		servicio.eliminarGame(juego);
+		//servicio.eliminarGame(juego);
+		servicio.eliminar(juego.getId());
 		return "redirect:/gameCap/";
 	}
 
 	@GetMapping("/gameCap/stories/{id}")
 	public String historiasdeJuego(@PathVariable("id") long id, Model modelPrincipal) {
-		TsscGame juego = servicio.findGameById(id);
+		//TsscGame juego = servicio.findGameById(id);
+		TsscGame juego = servicio.encontrarPorId(id);
+		List<TsscStory> st = new ArrayList<TsscStory>();
+		juego.setTsscStories(st);
+		
+		for (int i = 0; i < serviceStorie.findAll().size(); i++) {
+			
+			if(serviceStorie.findAll().get(i).getTsscGame().getName().equals(juego.getName())) {
+				
+				juego.addTsscStory(serviceStorie.findAll().get(i));
+			}
+			
+		}
+		
+		
+		System.out.println(juego.getTsscStories());
 		modelPrincipal.addAttribute("tsscGame", juego);
 		modelPrincipal.addAttribute("stories", juego.getTsscStories());
 		return "gameCap/storiesGame";
@@ -178,7 +203,8 @@ public class GameController {
 	public String mostrarTemaPrincipal(@PathVariable("id") long id, Model modelPrincipal) {
 		
 		List<TsscTopic> primero = new ArrayList<TsscTopic>();
-		TsscGame juego = servicio.findGameById(id);
+		//TsscGame juego = servicio.findGameById(id);
+		TsscGame juego = servicio.encontrarPorId(id);
 		List<TsscGame> segundo = new ArrayList<TsscGame>();
 		segundo.add(juego);
 		if(juego.getTsscTopic()!=null) {

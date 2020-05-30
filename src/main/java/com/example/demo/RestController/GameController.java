@@ -8,7 +8,7 @@ import com.example.demo.Model.TsscStory;
 
 public interface GameController {
 	
-	public TsscGame ActualizarGame(TsscGame game);
+	public void ActualizarGame(TsscGame game);
 	public TsscGame AnadirGame(TsscGame gameOne) ;
 	//public TsscGame AnadirGameSinTema(TsscGame gameOne);
 	//public TsscGame AnadirGameJuego2(TsscGame gameOne) ;

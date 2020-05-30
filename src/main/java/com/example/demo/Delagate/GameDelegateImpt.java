@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
 import com.example.demo.Model.TsscGame;
+import com.example.demo.Model.TsscStory;
 import com.example.demo.Model.TsscTopic;
 
 
@@ -19,7 +20,6 @@ public class GameDelegateImpt implements GameDelegate{
 	
 
 	public GameDelegateImpt() {
-		super();
 		this.restTemplate = new RestTemplate();
 	}
 
@@ -31,10 +31,10 @@ public class GameDelegateImpt implements GameDelegate{
 	///hello
 
 	@Override
-	public TsscGame actualizar(TsscGame entity) {
+	public void actualizar(TsscGame entity) {
 		// TODO Auto-generated method stub
-		TsscGame encontrado= restTemplate.patchForObject(SERVER+"api/games", entity, TsscGame.class);
-		return encontrado;
+		 restTemplate.put(SERVER+"api/games", entity, TsscGame.class);
+	
 	}
 
 	@Override
@@ -53,6 +53,13 @@ public class GameDelegateImpt implements GameDelegate{
 	public List<TsscGame> findAll() {
 		TsscGame[] games= restTemplate.getForObject(SERVER+"api/games",TsscGame[].class );
 		List<TsscGame> nueva= Arrays.asList(games);
+		return nueva;
+	}
+	
+	@Override
+	public List<TsscStory> findAllStories() {
+		TsscStory[] games= restTemplate.getForObject(SERVER+"api/games",TsscStory[].class );
+		List<TsscStory> nueva= Arrays.asList(games);
 		return nueva;
 	}
 

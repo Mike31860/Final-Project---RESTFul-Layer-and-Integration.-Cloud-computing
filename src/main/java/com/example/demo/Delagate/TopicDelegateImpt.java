@@ -29,9 +29,9 @@ public class TopicDelegateImpt implements TopicDelegate {
 	}
 
 	@Override
-	public TsscTopic actualizar(TsscTopic entity) {
-		TsscTopic encontrado= restTemplate.patchForObject(SERVER+"api/topics", entity, TsscTopic.class);
-		return encontrado;
+	public void  actualizar(TsscTopic entity) {
+		restTemplate.put(SERVER+"api/topics", entity, TsscTopic.class);
+	
 	}
 
 	@Override

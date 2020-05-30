@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -54,7 +55,7 @@ public class TopicRestController implements TopicController{
 	}
 
 	@Override
-	@PatchMapping("/api/topics")
+	@PutMapping("/api/topics")
 	public void actualizar(@RequestBody TsscTopic topic) {
 		// TODO Auto-generated method stub
 		service.actualizar(topic);

@@ -107,47 +107,6 @@ class timeControllDelegateTest {
 		
 	}
 	
-	
-	
-	
-	
-	
-//	
-//	@Test
-//	@Transactional(readOnly=false, propagation=Propagation.REQUIRED, rollbackFor=Exception.class)
-//	void EditarTimeControllerTest() {
-//		
-//		TsscTimecontrol nuevo= new TsscTimecontrol();
-//		nuevo.setAutostart("Miguel");
-//		nuevo.setOrder(BigDecimal.ONE);
-//		nuevo.setLastPlayTime(LocalTime.now());
-//		nuevo.setName("Primero");
-//		nuevo.setState("HEY");
-//		nuevo.setIntervalRunning(BigDecimal.TEN);
-//		nuevo.setType("ME");
-//		nuevo.setTimeInterval(BigDecimal.valueOf(23));
-//		when(delegate.guardar(nuevo)).thenReturn(nuevo);
-//		assertNotNull(TimeServiceImp.AnadirTimeControl(nuevo));
-//		assertNotNull(TimeServiceImp.findTimeById(nuevo.getId()));
-//		nuevo.setAutostart("Nelson");
-//		nuevo.setOrder(BigDecimal.valueOf(85));
-//		nuevo.setLastPlayTime(LocalTime.now());
-//		nuevo.setName("Segundo");
-//		nuevo.setState("HEY2");
-//		nuevo.setIntervalRunning(BigDecimal.valueOf(75));
-//		nuevo.setType("MEyu");
-//		nuevo.setTimeInterval(BigDecimal.valueOf(29));
-//		when(delegate.actualizar(nuevo)).thenReturn(nuevo);
-//		assertEquals(nuevo.getAutostart(),TimeServiceImp.findTimeById(nuevo.getId()).getAutostart());
-//		assertEquals(nuevo.getOrder(),TimeServiceImp.findTimeById(nuevo.getId()).getOrder());
-//		assertEquals(nuevo.getLastPlayTime(),TimeServiceImp.findTimeById(nuevo.getId()).getLastPlayTime());
-//		assertEquals(nuevo.getName(),TimeServiceImp.findTimeById(nuevo.getId()).getName());
-//		assertEquals(nuevo.getState(),TimeServiceImp.findTimeById(nuevo.getId()).getState());
-//		assertEquals(nuevo.getIntervalRunning(),TimeServiceImp.findTimeById(nuevo.getId()).getIntervalRunning());
-//		assertEquals(nuevo.getType(),TimeServiceImp.findTimeById(nuevo.getId()).getType());
-//		assertEquals(nuevo.getTimeInterval(),TimeServiceImp.findTimeById(nuevo.getId()).getTimeInterval());
-//		
-//		
-//	}
+
 
 }
