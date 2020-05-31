@@ -17,10 +17,13 @@ import com.example.demo.Model.TsscAdmin;
 import com.example.demo.Model.TsscGame;
 import com.example.demo.Model.TsscGameAdmin;
 import com.example.demo.Model.TsscStory;
+import com.example.demo.Model.TsscTimecontrol;
 import com.example.demo.Model.TsscTopic;
 import com.example.demo.Service.AdminService;
 import com.example.demo.Service.GameService;
 import com.example.demo.Service.StoryService;
+import com.example.demo.Service.TimeControlService;
+import com.example.demo.Service.TimeControlServiceImpt;
 import com.example.demo.Service.TopicService;
 
 @SpringBootApplication
@@ -54,6 +57,7 @@ public class MiguelRomero {
 		TopicService topicService = principal.getBean(TopicService.class);
 		GameService gameService = principal.getBean(GameService.class);
 		StoryService storyserv= principal.getBean(StoryService.class);
+		TimeControlService timese=principal.getBean(TimeControlService.class);
 
 		
 		TsscTopic temaOne = new TsscTopic();
@@ -139,6 +143,23 @@ public class MiguelRomero {
 		gameTwo.setGuestPassword("123456");
 		gameTwo.setTsscGameAdmins(lista2);
 		gameService.AnadirGameSinTema(gameTwo);
+		
+		
+		TsscTimecontrol time= new TsscTimecontrol();
+		time.setAutostart("Miguel");
+		time.setOrder(BigDecimal.ONE);
+		time.setLastPlayTime(LocalTime.now());
+		time.setName("Primero");
+		time.setState("HEY");
+		time.setIntervalRunning(BigDecimal.TEN);
+		time.setType("ME");
+		time.setTimeInterval(BigDecimal.valueOf(23));
+		time.setTsscGame(gameOne);
+		gameOne.addTsscTimecontrol(time);
+		timese.AnadirTimeControl(time);
+		
+		
+		
 
 	
 		

@@ -46,8 +46,8 @@ public class TimeControllerDaoImpt implements TimeControllerDao{
 
 	@Override
 	public List<TsscTimecontrol> findAll() {
-		// TODO Auto-generated method stub
-		return null;
+		String jpql = "SELECT t FROM TsscTimecontrol t";
+		return entityManager.createQuery(jpql).getResultList();
 	}
 
 }

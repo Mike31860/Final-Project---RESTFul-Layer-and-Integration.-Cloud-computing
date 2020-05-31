@@ -15,10 +15,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.demo.Delagate.GameDelegate;
+import com.example.demo.Delagate.TimeControlDelegate;
+import com.example.demo.Delagate.TimeControlDelegateImp;
 import com.example.demo.Delagate.TopicDelegate;
 import com.example.demo.Delagate.storyDelegate;
 import com.example.demo.Model.TsscGame;
 import com.example.demo.Model.TsscStory;
+import com.example.demo.Model.TsscTimecontrol;
 import com.example.demo.Model.TsscTopic;
 import com.example.demo.Service.GameService;
 import com.example.demo.Service.GameServiceImpt;
@@ -34,12 +37,14 @@ public class GameController {
 	private GameDelegate servicio;
 	private TopicDelegate ServiceTopic;
 	private storyDelegate serviceStorie;
+	private TimeControlDelegate servicioTime;
 
 	@Autowired
-	public GameController(GameDelegate Service, TopicDelegate topic, storyDelegate serviceStorie) {
+	public GameController(GameDelegate Service, TopicDelegate topic, storyDelegate serviceStorie, TimeControlDelegate time) {
 		this.servicio = Service;
 		this.ServiceTopic = topic;
 		this.serviceStorie=serviceStorie;
+		this.servicioTime=time;
 	}
 
 	@GetMapping("/gameCap/")
@@ -198,6 +203,39 @@ public class GameController {
 		modelPrincipal.addAttribute("stories", juego.getTsscStories());
 		return "gameCap/storiesGame";
 	}
+	
+	@GetMapping("/gameCap/Timecontrol/{id}")
+	public String cronogramasdeJuego(@PathVariable("id") long id, Model modelPrincipal) {
+		//TsscGame juego = servicio.findGameById(id);
+		TsscGame juego = servicio.encontrarPorId(id);
+		List<TsscTimecontrol> st = new ArrayList<TsscTimecontrol>();
+		juego.setTsscTimecontrol(st);;
+		
+		for (int i = 0; i < servicioTime.findAll().size(); i++) {
+			
+			if(servicioTime.findAll().get(i).getTsscGame().getName().equals(juego.getName())) {
+				
+				juego.addTsscTimecontrol(servicioTime.findAll().get(i));
+			}
+			
+		}
+		
+		
+		System.out.println(juego.getTsscStories());
+		modelPrincipal.addAttribute("tsscGame", juego);
+		modelPrincipal.addAttribute("times", juego.getTsscTimecontrols());
+		return "gameCap/timesGame";
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	@GetMapping("/gameCap/topic/{id}")
 	public String mostrarTemaPrincipal(@PathVariable("id") long id, Model modelPrincipal) {

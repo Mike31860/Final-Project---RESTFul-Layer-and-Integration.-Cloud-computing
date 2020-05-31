@@ -4,7 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.Model.TsscTimecontrol;
@@ -21,34 +24,35 @@ public class TimeRestControllerImpt implements TimeRestController{
 	
 	@Override
 	@PostMapping("/api/times")
-	public TsscTimecontrol AnadirTimeControl(TsscTimecontrol Time) {
+	public TsscTimecontrol AnadirTimeControl( @RequestBody TsscTimecontrol Time) {
 		// TODO Auto-generated method stub
 		return service.AnadirTimeControl(Time);
 	}
 
 	@Override
 	@GetMapping("/api/times/{id}")
-	public TsscTimecontrol findTimeControlById(long id) {
+	public TsscTimecontrol findTimeControlById(@PathVariable long id) {
 		// TODO Auto-generated method stub
 		return service.findTimeById(id);
 	}
 
 	@Override
+	@GetMapping("/api/times")
 	public Iterable<TsscTimecontrol> findAlll() {
 		// TODO Auto-generated method stub
-		return null;
+		return service.findAlll();
 	}
 
 	@Override
-	@PatchMapping("/api/times")
-	public void actualizar(TsscTimecontrol time) {
+	@PutMapping("/api/times")
+	public void actualizar(@RequestBody TsscTimecontrol time) {
 		// TODO Auto-generated method stub
 		service.ActualizarTimeControl(time);
 	}
 
 	@Override
 	@DeleteMapping("/api/times/{id}")
-	public TsscTimecontrol eliminarTimeControl(long id) {
+	public TsscTimecontrol eliminarTimeControl(@PathVariable long id) {
 		// TODO Auto-generated method stub
 		TsscTimecontrol encontrado=service.findTimeById(id);
 		service.eliminarTime(encontrado);

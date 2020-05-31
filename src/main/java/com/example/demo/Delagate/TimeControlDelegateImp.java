@@ -1,5 +1,8 @@
 package com.example.demo.Delagate;
 
+import java.util.Arrays;
+import java.util.List;
+
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,9 +29,9 @@ public class TimeControlDelegateImp implements TimeControlDelegate  {
 	}
 
 	@Override
-	public TsscTimecontrol actualizar(TsscTimecontrol entity) {
-		TsscTimecontrol encontrado= restTemplate.patchForObject(SERVER+"api/times", entity, TsscTimecontrol.class);
-		return encontrado;
+	public void actualizar(TsscTimecontrol entity) {
+	restTemplate.put(SERVER+"api/times", entity, TsscTimecontrol.class);
+		
 	}
 
 	@Override
@@ -44,9 +47,11 @@ public class TimeControlDelegateImp implements TimeControlDelegate  {
 	}
 
 	@Override
-	public Iterable<TsscTimecontrol> findAll() {
-		// TODO Auto-generated method stub
-		return null;
+	public List<TsscTimecontrol> findAll() {
+		
+		TsscTimecontrol[] times= restTemplate.getForObject(SERVER+"api/times",TsscTimecontrol[].class );
+		List<TsscTimecontrol> nueva= Arrays.asList(times);
+		return nueva;
 	}
 
 }

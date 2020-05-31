@@ -45,8 +45,6 @@ class topicDelegateTest {
 		this.topicServiceImp = topicServiceImp;
 	}
 
-
-
 	@Test
 	void testAnadirTopic() {
 

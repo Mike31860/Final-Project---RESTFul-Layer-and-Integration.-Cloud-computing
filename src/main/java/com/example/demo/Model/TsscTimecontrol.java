@@ -2,6 +2,9 @@ package com.example.demo.Model;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.math.BigDecimal;
 import java.time.LocalTime;
 import java.util.List;
@@ -45,6 +48,7 @@ public class TsscTimecontrol implements Serializable {
 
 	// bi-directional many-to-one association to TsscTimeInterval
 	@OneToMany(mappedBy = "tsscTimecontrol")
+	@JsonIgnore
 	private List<TsscTimeInterval> tsscTimeIntervals;
 
 	// bi-directional many-to-one association to TsscGame
