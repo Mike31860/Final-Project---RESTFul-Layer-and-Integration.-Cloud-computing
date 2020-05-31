@@ -65,6 +65,18 @@ public class StoryServiceImpt implements StoryService {
 		return null;
 	}
 	
+	@Override
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED, rollbackFor=Exception.class)
+	public TsscStory ActualizarStoryTotal(TsscStory StoryOne) {
+
+	
+			story.actualizar(StoryOne);
+			return StoryOne;
+		
+
+		
+	}
+	
 	
 	@Override
 	@Transactional(readOnly=false, propagation=Propagation.REQUIRED, rollbackFor=Exception.class)

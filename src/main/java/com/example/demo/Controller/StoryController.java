@@ -52,19 +52,19 @@ public class StoryController {
 		if (!opcion.equals("Cancelar")) {
 			if (bind.hasErrors()) {
 
-				modelPrincipal.addAttribute("name", story.getDescription());
-				modelPrincipal.addAttribute("name", story.getBusinessValue());
-				modelPrincipal.addAttribute("name", story.getInitialSprint());
-				modelPrincipal.addAttribute("name", story.getPriority());
+				modelPrincipal.addAttribute("description", story.getDescription());
+				modelPrincipal.addAttribute("businessValue", story.getBusinessValue());
+				modelPrincipal.addAttribute("initialSprint", story.getInitialSprint());
+				modelPrincipal.addAttribute("priority", story.getPriority());
 				modelPrincipal.addAttribute("topics", servicio.findAll());
 				modelPrincipal.addAttribute("games", gameServicio.findAll());
 
 				return "storyCap/agregarHistoria";
 			} else if (!bind.hasErrors()) {
 
-				TsscGame encontrado = gameServicio.encontrarPorId(story.getTsscGame().getId());
-				encontrado.addTsscStory(story);			
-				gameServicio.actualizar(encontrado);
+//				TsscGame encontrado = gameServicio.encontrarPorId(story.getTsscGame().getId());
+//				encontrado.addTsscStory(story);			
+//				gameServicio.actualizar(encontrado);
 				
 				// gameServicio.encontrarPorId(story.getTsscGame().getId()).addTsscStory(story);
 				// servicio.AnadirStory(story, encontrado.getId());

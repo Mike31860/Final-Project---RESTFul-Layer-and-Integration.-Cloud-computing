@@ -107,12 +107,12 @@ public class TsscGame implements Serializable {
 
 	// bi-directional many-to-one association to TsscStory
 
-	@OneToMany(mappedBy = "tsscGame")
+	@OneToMany(cascade = CascadeType.REMOVE, mappedBy = "tsscGame")
 	@JsonIgnore
 	private List<TsscStory> tsscStories;
 	
 	//bi-directional many-to-one association to TsscTimecontrol
-	@OneToMany(mappedBy="tsscGame")
+	@OneToMany(cascade =CascadeType.REMOVE, mappedBy="tsscGame")
 	@JsonIgnore
 	private List<TsscTimecontrol> tsscTimecontrols;
 

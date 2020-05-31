@@ -123,13 +123,22 @@ public class TopicController {
 	public String deleteTopic(@PathVariable("id") long id) {
 		TsscTopic encontrado = servicio.findById(id);
 
-		for (TsscGame juegos : servicio2.findAll()) {
-			if (juegos.getTsscTopic() != null && juegos.getTsscTopic().equals(encontrado)) {
-				juegos.setTsscTopic(null);
-			}
-
+//		for (TsscGame juegos : servicio2.findAll()) {
+//			if (juegos.getTsscTopic() != null && juegos.getTsscTopic().equals(encontrado)) {
+//				juegos.setTsscTopic(null);
+//			}
+//
+//		}
+		for (TsscGame juegos : encontrado.getTsscGames()) {
+		if (juegos.getTsscTopic() != null && juegos.getTsscTopic().getName().equals(encontrado.getName())) {
+			juegos.setTsscTopic(null);
+			servicio2.actualizar(juegos);
 		}
 
+	}
+
+		encontrado.setTsscGames(null);
+	    servicio.actualizar(encontrado);
 		servicio.eliminar(encontrado);
 		return "redirect:/";
 	}

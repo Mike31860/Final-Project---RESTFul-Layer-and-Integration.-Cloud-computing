@@ -35,6 +35,7 @@ public class StoryDaoImpt implements StoryDao {
 	public void eliminar(TsscStory entity) {
 		entityManager.remove(entity);
 		
+		
 	}
 
 	@Override

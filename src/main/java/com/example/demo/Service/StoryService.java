@@ -12,6 +12,7 @@ public interface StoryService {
 	public TsscStory ActualizarStory(TsscStory Story, String description, String Altdescripption);
 	public TsscStory findStoryById(Long id);
 	public boolean existbyId(Long id);
+	public TsscStory ActualizarStoryTotal(TsscStory Story);
 	
 	public Iterable<TsscStory> findAlll();
 	public void eliminarStory(TsscStory story);

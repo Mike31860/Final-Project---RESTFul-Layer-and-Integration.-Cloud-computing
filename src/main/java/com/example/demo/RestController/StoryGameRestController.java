@@ -30,7 +30,7 @@ public class StoryGameRestController implements StoryController{
 	@PutMapping("/api/stories")
 	public void ActualizarStory(@RequestBody TsscStory Story) {
 		// TODO Auto-generated method stub
-	service.ActualizarStory(Story, Story.getDescription(), Story.getAltDescripton());
+	service.ActualizarStoryTotal(Story);
 
 	
 	}

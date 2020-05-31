@@ -169,15 +169,15 @@ public class GameController {
 	//	juego.getTsscStories().clear();
 		
        
-		
-		if(juego.getTsscStories() != null) {
-			for(int i = 0; i < juego.getTsscStories().size(); i++) {
-				
-				
-				serviceStorie.eliminar(juego.getTsscStories().get(i));
-				
-			}
-		}
+//		
+//		if(juego.getTsscStories() != null) {
+//			for(int i = 0; i < juego.getTsscStories().size(); i++) {
+//				
+//				
+//				serviceStorie.eliminar(juego.getTsscStories().get(i));
+//				
+//			}
+//		}
 		
 
 	

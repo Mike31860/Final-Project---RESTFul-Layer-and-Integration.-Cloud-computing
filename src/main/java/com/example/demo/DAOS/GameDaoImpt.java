@@ -25,6 +25,7 @@ public class GameDaoImpt implements GameDao{
 	public TsscGame guardar(TsscGame entity) {
 		
 		entityManager.persist(entity);
+		
 		//entityManager.merge(entity);
 		return entity;
 	}
@@ -38,6 +39,7 @@ public class GameDaoImpt implements GameDao{
 	@Override
 	public void eliminar(TsscGame entity) {
 		entityManager.remove(entity);
+		
 		
 	}
 
