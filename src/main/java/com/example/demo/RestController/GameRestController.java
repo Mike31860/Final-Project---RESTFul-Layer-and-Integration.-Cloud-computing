@@ -76,6 +76,7 @@ public class GameRestController  implements GameController{
 		return null;
 	}
 
+	//hola
 	@Override
 	@GetMapping("/api/games/{date}")
 	public List<TsscGame> findGameByDate(String date) {
