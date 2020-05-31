@@ -10,7 +10,7 @@ public interface GameDelegate {
 	
 	public TsscGame guardar(TsscGame entity);
 	public void actualizar(TsscGame entity);
-	public void eliminar(Long id);
+	public void eliminar(long id);
 	public TsscGame encontrarPorId(long id);
 	public List<TsscGame> findAll();
 	public List<TsscStory> findAllStories();

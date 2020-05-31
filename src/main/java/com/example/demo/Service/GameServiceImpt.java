@@ -146,27 +146,6 @@ public class GameServiceImpt implements GameService {
 	@Override
 	@Transactional(readOnly = false, propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
 	public void eliminarGame(TsscGame juego) {
-
-		for (int i = 0; i < juego.getTsscGameAdmins().size(); i++) {
-			TsscAdmin ecnontrado = juego.getTsscGameAdmins().get(i).getTsscAdmin();
-			for (int j = 0; j < ecnontrado.getTsscGameAdmins().size(); j++) {
-
-				if (ecnontrado.getTsscGameAdmins().get(j).getTsscGame().getName().equals(juego.getName())) {
-					ecnontrado.getTsscGameAdmins().get(j).setTsscGame(null);
-				}
-			}
-			juego.getTsscGameAdmins().set(i, null);
-
-		}
-
-		for (int i = 0; i < juego.getTsscTimecontrols().size(); i++) {
-
-			TsscTimecontrol encontrado = juego.getTsscTimecontrols().get(i);
-			encontrado.setTsscGame(juego);
-
-		}
-		juego.setTsscTimecontrol(null);
-
 		game.eliminar(juego);
 
 	}

@@ -38,7 +38,7 @@ public class GameDelegateImpt implements GameDelegate{
 	}
 
 	@Override
-	public void eliminar(Long id) {
+	public void eliminar(long id) {
 		restTemplate.delete(SERVER+"api/games/"+id);
 		
 	}
