@@ -168,15 +168,19 @@ public class GameController {
 		TsscGame juego = servicio.encontrarPorId(id);
 	//	juego.getTsscStories().clear();
 		
-		for (TsscStory stories : serviceStorie.findAll()) {
-			if (stories.getTsscGame() != null && stories.getTsscGame().equals(juego)) {
-				//serviceStorie.eliminarStory(stories);
-				serviceStorie.eliminar(stories);
+       
+		
+		if(juego.getTsscStories() != null) {
+			for(int i = 0; i < juego.getTsscStories().size(); i++) {
+				
+				
+				serviceStorie.eliminar(juego.getTsscStories().get(i));
+				
 			}
-
 		}
 		
-		//servicio.eliminarGame(juego);
+
+	
 		servicio.eliminar(juego.getId());
 		return "redirect:/gameCap/";
 	}

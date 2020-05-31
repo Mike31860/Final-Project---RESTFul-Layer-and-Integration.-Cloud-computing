@@ -90,6 +90,7 @@ public class TsscGame implements Serializable {
 
 	 //bi-directional many-to-one association to TsscGameAdmin
 	@OneToMany(mappedBy = "tsscGame")
+	@JsonIgnore
 	private List<TsscGameAdmin> tsscGameAdmins;
 
 	// bi-directional many-to-one association to TsscGroup
