@@ -12,6 +12,7 @@ public interface GameDelegate {
 	public void actualizar(TsscGame entity);
 	public void eliminar(Long id);
 	public TsscGame encontrarPorId(long id);
+	public List<TsscGame> encontrarPorFecha(String date);
 	public List<TsscGame> findAll();
 	public List<TsscStory> findAllStories();
 	public boolean existsById(Long id);

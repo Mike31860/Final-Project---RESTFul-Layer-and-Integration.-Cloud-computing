@@ -1,5 +1,7 @@
 package com.example.demo.RestController;
 
+import java.util.List;
+
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -12,7 +14,8 @@ public interface GameController {
 	public TsscGame AnadirGame(TsscGame gameOne) ;
 	//public TsscGame AnadirGameSinTema(TsscGame gameOne);
 	//public TsscGame AnadirGameJuego2(TsscGame gameOne) ;
-	public TsscGame findGameById(long id);  
+	public TsscGame findGameById(long id);
+	public List<TsscGame> findGameByDate(String id);
 	//public boolean existbyId(long id);
 	//public TsscStory agregarStory(TsscStory story,long id );
 	public Iterable<TsscGame> findAlll();

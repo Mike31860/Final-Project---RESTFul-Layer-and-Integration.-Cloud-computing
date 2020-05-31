@@ -68,6 +68,14 @@ public class GameDelegateImpt implements GameDelegate{
 		// TODO Auto-generated method stub
 		return false;
 	}
+
+	@Override
+	public List<TsscGame> encontrarPorFecha(String date) {
+		// TODO Auto-generated method stub
+		TsscGame[] encontrado= restTemplate.getForObject(SERVER+"api/games/"+date, TsscGame[].class ); 
+		List<TsscGame> nueva= Arrays.asList(encontrado);
+		return nueva;
+	}
 	
 	
 	

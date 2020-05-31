@@ -2,6 +2,7 @@ package com.example.demo.DAOS;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -46,6 +47,7 @@ public class GameDaoImpt implements GameDao{
 		// TODO Auto-generated method stub
 		return entityManager.find(TsscGame.class, id);
 	}
+	
 
 	@Override
 	public List<TsscGame> findAll() {

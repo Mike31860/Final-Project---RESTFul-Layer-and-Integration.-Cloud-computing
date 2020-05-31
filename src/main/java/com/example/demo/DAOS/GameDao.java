@@ -14,6 +14,7 @@ public interface GameDao {
 	public TsscGame actualizar(TsscGame entity);
 	public void eliminar(TsscGame entity);
 	public TsscGame encontrarPorId(long id);
+	
 	public List<TsscGame> findAll();
 	public boolean existsById(Long id);
 	//1b)nombre, descripcion , id del tema PREGUNTAR
