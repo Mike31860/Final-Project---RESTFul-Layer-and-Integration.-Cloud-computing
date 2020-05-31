@@ -1,5 +1,8 @@
 package com.example.demo.Service;
 
+import java.time.LocalDate;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -120,6 +123,8 @@ public class GameServiceImpt implements GameService {
 		}
 
 	}
+	
+	
 
 	@Override
 	@Transactional(readOnly = false, propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
@@ -155,6 +160,12 @@ public class GameServiceImpt implements GameService {
 	public void actualizarGameDato(TsscGame game3) {
 		game.actualizar(game3);
 
+	}
+
+	@Override
+	public List<TsscGame> encontrarPorDates(LocalDate date) {
+		// TODO Auto-generated method stub
+		return game.encontrarPorDateStoryTime(date);
 	}
 
 //

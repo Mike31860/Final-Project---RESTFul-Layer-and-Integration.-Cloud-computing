@@ -1,5 +1,9 @@
 package com.example.demo.RestController;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -70,6 +74,15 @@ public class GameRestController  implements GameController{
 		// TODO Auto-generated method stub
 		
 		return null;
+	}
+
+	//hola
+	@Override
+	@GetMapping("/api/games/{date}")
+	public List<TsscGame> findGameByDate(String date) {
+		// TODO Auto-generated method stub
+		
+		return service.encontrarPorDates(LocalDate.parse(date, DateTimeFormatter.ofPattern("yyyy-MM-dd")));
 	}
 
     //@Override

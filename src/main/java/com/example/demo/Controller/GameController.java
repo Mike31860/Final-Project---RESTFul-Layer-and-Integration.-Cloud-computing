@@ -232,6 +232,18 @@ public class GameController {
 	}
 	
 	
+	@GetMapping("/gameCap/bydate")
+	public String indexJuegosPorFecha(Model model) {
+	
+		return "gameCap/buscarGameFecha";
+	}
+	
+	@PostMapping("/gameCap/bydate/{date}")
+	public String buscarGameByFecha(Model model, @PathVariable("date") String date) {
+		//model.addAttribute("tsscGame", new TsscGame());
+		model.addAttribute("consulta", servicio.encontrarPorFecha(date));
+		return "gameCap/consultaJuegos";
+	}
 	
 	
 	
