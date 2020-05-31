@@ -77,7 +77,7 @@ public class GameRestController  implements GameController{
 	}
 
 	@Override
-	@PostMapping("/api/games/{date}")
+	@GetMapping("/api/games/{date}")
 	public List<TsscGame> findGameByDate(String date) {
 		// TODO Auto-generated method stub
 		
