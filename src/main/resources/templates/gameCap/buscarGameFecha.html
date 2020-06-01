@@ -16,19 +16,18 @@
 		<MARQUEE style="color:white"> Taller Numero 2 Miguel Romero Rosas </MARQUEE>
 		<div class="row">
 			<div class="col-md-5">
-				<form action="#" th:object="${tsscCosulta}" th:action="@{/gameCap/bydate/}"
-					method="get">
+				<form action="#" th:object="${consultas}" th:action="@{/gameCap/bydate/}"
+					method="post">
 					<div class="row">
 
 						
 
-						<div class="form-group col-md-6">
+							<div class="form-group col-md-6">
 							<label for="scheduledDate" class="col-form-label" style="color:white">Fecha de creacion de juego</label> <input
-								type="date" class="form-control"
-								id="scheduledDate" placeholder="02-02-2020"> 
-								
+								type="date" th:field="*{scheduledDate}" class="form-control"
+								id="scheduledDate" placeholder="01/01/2000"> 
+								<span th:if="${#fields.hasErrors('scheduledDate')}" th:errors="*{scheduledDate}" class="text-danger"> </span>
 						</div>
-						
 
                        <div class="col-md-4 mt-3">
                        

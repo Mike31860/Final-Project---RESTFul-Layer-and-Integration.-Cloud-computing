@@ -1,10 +1,14 @@
 package com.example.demo.Controller;
 
+import java.text.DateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -13,12 +17,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.example.demo.Delagate.GameDelegate;
 import com.example.demo.Delagate.TimeControlDelegate;
 import com.example.demo.Delagate.TimeControlDelegateImp;
 import com.example.demo.Delagate.TopicDelegate;
 import com.example.demo.Delagate.storyDelegate;
+import com.example.demo.Model.TsscConsulta;
 import com.example.demo.Model.TsscGame;
 import com.example.demo.Model.TsscStory;
 import com.example.demo.Model.TsscTimecontrol;
@@ -232,25 +238,46 @@ public class GameController {
 	}
 	
 	
-	@GetMapping("/gameCap/bydate")
+	@GetMapping("/gameCap/bydate/")
 	public String indexJuegosPorFecha(Model model) {
-	
+		
+		model.addAttribute("consultas", new TsscConsulta());
 		return "gameCap/buscarGameFecha";
 	}
 	
-	@PostMapping("/gameCap/bydate/{date}")
-	public String buscarGameByFecha(Model model, @PathVariable("date") String date) {
-		//model.addAttribute("tsscGame", new TsscGame());
-		model.addAttribute("consulta", servicio.encontrarPorFecha(date));
-		return "gameCap/consultaJuegos";
+	//"/gameCap/bydate/fecha/{date}"
+	@PostMapping("/gameCap/bydate/")	
+	public ModelAndView buscarGameByFecha(@Validated TsscConsulta consulta, BindingResult bind,
+			Model modelPrincipal, @RequestParam(value = "action", required = true) String opcion) {
+		
+
+		if (bind.hasErrors()) {
+
+		
+			modelPrincipal.addAttribute("consultas", consulta);
+
+			return new ModelAndView("gameCap/buscarGameFecha", "consultas",consulta);
+		}
+		
+
+		if (opcion != null && !opcion.equals("Cancelar")) {
+
+			
+			System.out.println(consulta.getScheduledDate());
+
+			return new ModelAndView("gameCap/ConsultaJuegos", "consulta", servicio.encontrarPorFecha(consulta.getScheduledDate()));
+		}
+		
+		else {
+	
+		
+           return new ModelAndView("gameCap/principalGame","games", servicio.findAll() );
+		}
+	
+	
 	}
 	
-	
-	
-	
-	
-	
-	
+
 	
 	
 	@GetMapping("/gameCap/topic/{id}")

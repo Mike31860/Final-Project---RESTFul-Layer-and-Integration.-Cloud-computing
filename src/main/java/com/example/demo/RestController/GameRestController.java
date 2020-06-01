@@ -2,7 +2,10 @@ package com.example.demo.RestController;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.List;
+
+import javax.websocket.server.PathParam;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Propagation;
@@ -78,11 +81,9 @@ public class GameRestController  implements GameController{
 
 	//hola
 	@Override
-	@GetMapping("/api/games/{date}")
-	public List<TsscGame> findGameByDate(String date) {
-		// TODO Auto-generated method stub
-		
-		return service.encontrarPorDates(LocalDate.parse(date, DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+	@GetMapping("/api/games/fecha/{date}")
+	public List<TsscGame> findGameByDate(@PathVariable  String date) {	
+		return service.encontrarPorDates(LocalDate.parse(date));
 	}
 
     //@Override

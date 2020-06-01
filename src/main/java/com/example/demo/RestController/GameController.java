@@ -1,5 +1,7 @@
 package com.example.demo.RestController;
 
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,7 +17,7 @@ public interface GameController {
 	//public TsscGame AnadirGameSinTema(TsscGame gameOne);
 	//public TsscGame AnadirGameJuego2(TsscGame gameOne) ;
 	public TsscGame findGameById(long id);
-	public List<TsscGame> findGameByDate(String id);
+	public List<TsscGame> findGameByDate(String date);
 	//public boolean existbyId(long id);
 	//public TsscStory agregarStory(TsscStory story,long id );
 	public Iterable<TsscGame> findAlll();

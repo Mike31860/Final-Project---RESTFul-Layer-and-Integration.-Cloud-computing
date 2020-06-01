@@ -1,8 +1,12 @@
 package com.example.demo.Delagate;
 
+import java.text.DateFormat;
+import java.time.LocalDate;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
@@ -71,10 +75,11 @@ public class GameDelegateImpt implements GameDelegate{
 
 	@Override
 	public List<TsscGame> encontrarPorFecha(String date) {
-		// TODO Auto-generated method stub
-		TsscGame[] encontrado= restTemplate.getForObject(SERVER+"api/games/"+date, TsscGame[].class ); 
+	
+		TsscGame[] encontrado= restTemplate.getForObject(SERVER+"api/games/fecha/"+date, TsscGame[].class ); 
 		List<TsscGame> nueva= Arrays.asList(encontrado);
 		return nueva;
+	
 	}
 	
 	

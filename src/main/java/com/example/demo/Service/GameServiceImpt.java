@@ -1,6 +1,7 @@
 package com.example.demo.Service;
 
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -163,6 +164,7 @@ public class GameServiceImpt implements GameService {
 	}
 
 	@Override
+	@Transactional(readOnly = false, propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
 	public List<TsscGame> encontrarPorDates(LocalDate date) {
 		// TODO Auto-generated method stub
 		return game.encontrarPorDateStoryTime(date);
