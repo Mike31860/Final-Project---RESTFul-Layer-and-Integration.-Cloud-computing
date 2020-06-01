@@ -1,5 +1,9 @@
 package com.example.demo.RestController;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -14,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.demo.Model.TsscConsulta2;
 import com.example.demo.Model.TsscGame;
 import com.example.demo.Model.TsscStory;
 import com.example.demo.Model.TsscTopic;
@@ -71,7 +76,24 @@ public class TopicRestController implements TopicController{
 	}
 
 
-	
+	@Override
+	@GetMapping("/api/topic/fecha/{date}")
+	public List<TsscConsulta2> findGameByDate(@PathVariable  String date) {	
+		List<Object[]> econtrado= service.buscarTopicByDate(LocalDate.parse(date));
+		List<TsscConsulta2> nuevaLista= new ArrayList<TsscConsulta2>();
+		for (int i = 0; i < econtrado.size(); i++) {
+			
+			long numero= (long) econtrado.get(i)[1];
+			System.out.println(econtrado.get(i)[0]);
+			TsscTopic temaPrimero= (TsscTopic) (econtrado.get(i)[0]);
+		    TsscConsulta2 instancia= new TsscConsulta2(numero, temaPrimero);
+		    nuevaLista.add(instancia);
+			
+		}
+		
+		
+		return nuevaLista;
+	}
 	
 	
 	

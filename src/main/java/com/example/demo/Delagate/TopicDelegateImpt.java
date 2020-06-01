@@ -1,5 +1,6 @@
 package com.example.demo.Delagate;
 
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
 
@@ -8,6 +9,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 
+import com.example.demo.Model.TsscConsulta2;
 import com.example.demo.Model.TsscGame;
 import com.example.demo.Model.TsscTopic;
 
@@ -53,6 +55,16 @@ public class TopicDelegateImpt implements TopicDelegate {
 		TsscTopic[] topics= restTemplate.getForObject(SERVER+"api/topics",TsscTopic[].class );
 		List<TsscTopic> nueva= Arrays.asList(topics);
 		
+		return nueva;
+	}
+
+
+
+	@Override
+	public List<TsscConsulta2> nuevaConsulta(String date) {
+		TsscConsulta2[] ecnontrada=restTemplate.getForObject(SERVER+"api/topic/fecha/"+date,TsscConsulta2[].class );
+		System.out.println(ecnontrada);
+		List<TsscConsulta2> nueva= Arrays.asList(ecnontrada);
 		return nueva;
 	}
 	

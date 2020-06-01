@@ -1,5 +1,6 @@
 package com.example.demo.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 
@@ -10,6 +11,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.example.demo.DAOS.TopicDao;
+import com.example.demo.Model.TsscConsulta2;
 import com.example.demo.Model.TsscStory;
 import com.example.demo.Model.TsscTimecontrol;
 import com.example.demo.Model.TsscTopic;
@@ -126,6 +128,14 @@ public class TopicServiceImpt implements TopicService {
 		
 	}
 	
+	@Override
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED, rollbackFor=Exception.class)
+	public List<Object[]> buscarTopicByDate(LocalDate date) {
+		
+		return repositorio.encontrarTopicPorElDateGame(date);
+	
+		
+	}
 	
 
 //	@Autowired

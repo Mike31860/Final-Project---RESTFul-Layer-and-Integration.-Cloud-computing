@@ -12,9 +12,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.example.demo.Delagate.GameDelegate;
 import com.example.demo.Delagate.TopicDelegate;
+import com.example.demo.Model.TsscConsulta;
+import com.example.demo.Model.TsscConsulta2;
 import com.example.demo.Model.TsscGame;
 import com.example.demo.Model.TsscTopic;
 import com.example.demo.Service.GameService;
@@ -142,6 +145,58 @@ public class TopicController {
 		servicio.eliminar(encontrado);
 		return "redirect:/";
 	}
+	
+	@GetMapping("/TemaCap/bydate/")
+	public String indexTopicPorFecha(Model model) {
+		
+		model.addAttribute("consultas", new TsscConsulta2());
+		return "TemaCap/buscarTopicFecha";
+	}
+	
+	
+	@PostMapping("/TemaCap/bydate/")	
+	public ModelAndView buscarTopicByFecha(@Validated TsscConsulta2 consulta, BindingResult bind,
+			Model modelPrincipal, @RequestParam(value = "action", required = true) String opcion) {
+		
+
+		if (bind.hasErrors()) {
+
+		
+			modelPrincipal.addAttribute("consultas", consulta);
+
+			return new ModelAndView("TemaCap/buscarTopicFecha", "consultas",consulta);
+		}
+		
+
+		if (opcion != null && !opcion.equals("Cancelar")) {
+
+			
+			System.out.println(consulta.getScheduledDate());
+			System.out.println("Miguel");
+
+			return new ModelAndView("TemaCap/consultaTemas", "consulta", servicio.nuevaConsulta(consulta.getScheduledDate()));
+		}
+		
+		else {
+	
+		
+           return new ModelAndView("TemaCap/principalTopic","topics", servicio.findAll() );
+		}
+	
+	
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 //
 //	
 
