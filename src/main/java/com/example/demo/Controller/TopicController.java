@@ -173,7 +173,7 @@ public class TopicController {
 			
 			System.out.println(consulta.getScheduledDate());
 			System.out.println("Miguel");
-
+            System.out.println(servicio.nuevaConsulta(consulta.getScheduledDate()));
 			return new ModelAndView("TemaCap/consultaTemas", "consulta", servicio.nuevaConsulta(consulta.getScheduledDate()));
 		}
 		

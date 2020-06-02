@@ -315,6 +315,7 @@ public class GameController {
 			
 			System.out.println(consulta.getScheduledDate());
 
+			
 			return new ModelAndView("gameCap/ConsultaJuegos", "consulta", servicio.encontrarPorFecha(consulta.getScheduledDate()));
 		}
 		
