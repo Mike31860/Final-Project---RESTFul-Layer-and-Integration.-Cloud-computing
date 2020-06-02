@@ -49,12 +49,12 @@
 					</td>
 					<td class="text-info" th:text="${story.tsscGame.name}">
 					</td>
-					<td><a th:href="@{/storyCap/edit/{id}(id=${story.id})}"class="btn btn-primary"><i class="fas fa-strikethrough fa-spin"></i></a></td>
+					<td><a th:href="@{/gameCap/Stories/edit/{id}(id=${story.id})}"class="btn btn-primary"><i class="fas fa-strikethrough fa-spin"></i></a></td>
 					<td><a th:href="@{/storyCap/del/{id}(id=${story.id})}"class="btn btn-primary"><i class="fab fa-apple-pay fa-spin"></i></a></td></tr>
 				</tbody>
 				</table>
 				</div>
-				<p class="my-5"><a href="/storyCap/add" class="btn btn-primary">Agregar una nueva Historia</a></p></div>
+				<p class="my-5"><a th:href="@{/gameCap/Stories/add/{id}(id=${tsscGame.id})}" class="btn btn-primary">Agregar una nueva Historia</a></p></div>
 		</div>
 		<a href="/gameCap/">  Volver a la pagina anterior <i class="fas fa-home ml-2"></i></a>
 	</div>

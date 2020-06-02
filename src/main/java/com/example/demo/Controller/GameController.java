@@ -214,6 +214,16 @@ public class GameController {
 		return "gameCap/storiesGame";
 	}
 	
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	@GetMapping("/gameCap/Timecontrol/{id}")
 	public String cronogramasdeJuego(@PathVariable("id") long id, Model modelPrincipal) {
 		//TsscGame juego = servicio.findGameById(id);
@@ -231,11 +241,51 @@ public class GameController {
 		}
 		
 		
-		System.out.println(juego.getTsscStories());
+
 		modelPrincipal.addAttribute("tsscGame", juego);
 		modelPrincipal.addAttribute("times", juego.getTsscTimecontrols());
 		return "gameCap/timesGame";
 	}
+	
+	@GetMapping("/gameCap/Stories/add/{id}")
+	public String agregarStoryPrincipal(@PathVariable("id") long id,Model modelPrincipal) {
+		modelPrincipal.addAttribute("tsscStory", new TsscStory());
+		List<TsscGame> games= new ArrayList<TsscGame>();
+		games.add(servicio.encontrarPorId(id));
+		System.out.println(servicio.encontrarPorId(id).getName());
+		modelPrincipal.addAttribute("tsscGame", games);
+		//modelPrincipal.addAttribute("stories", servicio.findAll());
+		return "gameCap/agregarHistoria";
+	}
+	
+	@GetMapping("/gameCap/Stories/edit/{id}")
+	public String EditarStoryPrincipal(@PathVariable("id") long id, Model modelPrincipal) {
+		// TsscStory story = servicio.findStoryById(id);
+		TsscStory story = serviceStorie.encontrarPorId(id);
+		List<TsscGame> games= new ArrayList<TsscGame>();
+		games.add(story.getTsscGame());
+
+		{
+			if (story == null)
+				throw new IllegalArgumentException("Id del juego Invalido:" + id);
+
+			modelPrincipal.addAttribute("tsscStory", story);
+			modelPrincipal.addAttribute("description", story.getDescription());
+			modelPrincipal.addAttribute("businessValue", story.getBusinessValue());
+			modelPrincipal.addAttribute("initialSprint", story.getInitialSprint());
+			modelPrincipal.addAttribute("priority", story.getPriority());
+			modelPrincipal.addAttribute("games", games);
+
+			return "gameCap/EditarHistoria";
+		}
+
+	}
+	
+	
+	
+	
+	
+	
 	
 	
 	@GetMapping("/gameCap/bydate/")
@@ -276,6 +326,8 @@ public class GameController {
 	
 	
 	}
+	
+
 	
 
 	
