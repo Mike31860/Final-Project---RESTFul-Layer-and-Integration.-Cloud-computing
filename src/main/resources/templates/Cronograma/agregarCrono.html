@@ -19,22 +19,25 @@
 
 
 						<div class="form-group col-md-6">
-							<label for="description" class="col-form-label" style="color:white">Nombre del Cronograma a Agregar</label> <input type="text" th:field="*{name}"
-								class="form-control" id="name" placeholder="name">
-							<span th:if="${#fields.hasErrors('name')}"
-								th:errors="name" class="text-danger"> </span>
-						</div>
-
-						<div class="form-group col-md-6">
-							<label for="businessValue" class="col-form-label" style="color:white">Valor
-								de Order del Cronograma a Agregar</label> <input type="number" th:field="*{order}"
-								class="form-control" id="order"
-								placeholder="order"> 
+							<label for="name" class="col-form-label" style="color:white">Nombre del Cronograma a ser Agregado</label>
+							<input type="text" th:field="*{name}" class="form-control"
+								id="name" placeholder="name"> 
 								<span
-								th:if="${#fields.hasErrors('order')}"
-								th:errors="order" class="text-danger"> </span>
+								th:if="${#fields.hasErrors('name')}" th:errors="*{name}"
+								class="text-danger"> </span>
+						</div>
+
+				
+						
+							<div class="form-group col-md-6">
+							<label for="order" class="col-form-label" style="color:white">Valor
+								de Order del Cronograma a Agregar</label> 
+							<input type="number" th:field="*{order}"
+								class="form-control" id="order" placeholder="order">
+							<span th:if="${#fields.hasErrors('order')}" th:errors="*{order}" class="text-danger"> </span>
 
 						</div>
+						
 						<div class="form-group col-md-6">
 							<label for="initialSprint" class="col-form-label" style="color:white">Valor
 								del IntervarRuning del Cronograma a Agregar</label> <input type="number"

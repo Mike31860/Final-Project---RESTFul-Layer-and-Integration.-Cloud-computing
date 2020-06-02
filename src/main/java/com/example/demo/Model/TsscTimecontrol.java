@@ -2,7 +2,12 @@ package com.example.demo.Model;
 
 import java.io.Serializable;
 import javax.persistence.*;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
+import com.example.demo.Validate.GameValidar;
+import com.example.demo.Validate.TimeValidar;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.math.BigDecimal;
@@ -25,21 +30,25 @@ public class TsscTimecontrol implements Serializable {
 	private long id;
 
 	private String autostart;
-
+	
+	@NotNull(message = "Recuerde que el IntervalRunning deben ser mayores a 0",   groups=TimeValidar.class)
 	@Column(name = "INTERVAL_RUNNING")
 	private BigDecimal intervalRunning;
 
 	@Column(name = "LAST_PLAY_TIME")
 	private LocalTime lastPlayTime;
 
+	@NotBlank(message = "Debe de ingresar un nombre",   groups=TimeValidar.class)
 	private String name;
 
+	@NotNull(message = "Recuerde que la orden deben ser mayores a 0",   groups=TimeValidar.class)
 	@Column(name = "TC_ORDER")
 	private BigDecimal order;
 
 	@Column(name = "TC_STATE")
 	private String state;
-
+	
+	@NotNull(message = "Recuerde que el TimeInterval debe ser mayore a 0",   groups=TimeValidar.class)
 	@Column(name = "TIME_INTERVAL")
 	private BigDecimal timeInterval;
 

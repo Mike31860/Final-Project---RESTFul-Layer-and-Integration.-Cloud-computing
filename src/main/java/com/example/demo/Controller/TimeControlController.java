@@ -57,7 +57,7 @@ public class TimeControlController {
 				modelPrincipal.addAttribute("times", servicio.findAll());
 				modelPrincipal.addAttribute("games", gameServicio.findAll());
 
-				return "Cronograma/agregarHistoria";
+				return "Cronograma/agregarCrono";
 			} else if (!bind.hasErrors()) {
 
 				TsscGame encontrado = gameServicio.encontrarPorId(tsscTimecontrol.getTsscGame().getId());
