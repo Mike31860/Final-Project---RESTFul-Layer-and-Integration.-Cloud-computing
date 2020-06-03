@@ -8,6 +8,8 @@ public interface AdminService {
 	public TsscAdmin agregar(TsscAdmin nuevo);
 	public void eliminar(TsscAdmin eliminar);
 	public TsscAdmin editar(TsscAdmin editar);
+	public TsscAdmin findById(long id);
+	public  Iterable<TsscAdmin> findAll();
 	
 
 }

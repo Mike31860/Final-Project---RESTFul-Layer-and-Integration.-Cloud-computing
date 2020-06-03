@@ -8,7 +8,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.example.demo.DAOS.AdminDao;
+import com.example.demo.DAOS.TopicDao;
 import com.example.demo.Model.TsscAdmin;
+import com.example.demo.Model.TsscTopic;
 import com.example.demo.Repository.AdminRepository;
 import com.example.demo.Repository.GameRepository;
 
@@ -47,29 +50,50 @@ public class AdminServiceImpt implements AdminService {
 //	}
 //	
 	
-	@PersistenceContext
-	private EntityManager entityManager;
+	@Autowired
+	private AdminDao repositorio;
+	
+	@Autowired
+	public AdminServiceImpt(AdminDao repositorio) {
+		super();
+		this.repositorio = repositorio;
+	}
 
 	@Override
 	@Transactional(readOnly=false, propagation=Propagation.REQUIRED, rollbackFor=Exception.class)
 	public TsscAdmin agregar(TsscAdmin entity) {
-		entityManager.persist(entity);
-		return entity;
+		
+		return repositorio.guardar(entity);
 	}
 
 	@Override
 	@Transactional(readOnly=false, propagation=Propagation.REQUIRED, rollbackFor=Exception.class)
 	public TsscAdmin editar(TsscAdmin entity) {
-		entityManager.merge(entity);
-		return entity;
+		
+		return repositorio.actualizar(entity);
 	}
 
 	@Override
 	@Transactional(readOnly=false, propagation=Propagation.REQUIRED, rollbackFor=Exception.class)
 	public void eliminar(TsscAdmin entity) {
-		entityManager.remove(entity);
+		repositorio.eliminar(entity);;
 		
 	}
+
+	@Override
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED, rollbackFor=Exception.class)
+	public TsscAdmin findById(long id) {
+		// TODO Auto-generated method stub
+		return repositorio.findById(id);
+	}
+	
+	@Override
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED, rollbackFor=Exception.class)
+	public Iterable<TsscAdmin> findAll() {
+		// TODO Auto-generated method stub
+		return repositorio.findAll();
+	}
+
 
 	
 	

@@ -1,5 +1,7 @@
 package com.example.demo.DAOS;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
@@ -7,6 +9,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Repository;
 
 import com.example.demo.Model.TsscAdmin;
+import com.example.demo.Model.TsscTopic;
 
 @Repository
 @Scope("singleton")
@@ -39,5 +42,14 @@ public class AdminDaoImpt implements AdminDao {
 		// TODO Auto-generated method stub
 		return entityManager.find(TsscAdmin.class, id);
 	}
+	
+	@Override
+	public List<TsscAdmin> findAll() {
+		String jpql = "SELECT t FROM TsscAdmin t";
+		return entityManager.createQuery(jpql).getResultList();
+	}
+
+	
+	
 
 }
