@@ -132,7 +132,7 @@ public class TopicController {
 //			}
 //
 //		}
-		for (TsscGame juegos : encontrado.getTsscGames()) {
+		for (TsscGame juegos : servicio2.findAll()) {
 		if (juegos.getTsscTopic() != null && juegos.getTsscTopic().getName().equals(encontrado.getName())) {
 			juegos.setTsscTopic(null);
 			servicio2.actualizar(juegos);

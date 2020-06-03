@@ -9,7 +9,7 @@ public class TsscConsulta2 {
 	@NotBlank
 	private String scheduledDate;
 	private long total;
-	private TsscTopic temaEncontrado;
+	public TsscTopic temaEncontrado;
 
 	public TsscConsulta2() {
 		super();

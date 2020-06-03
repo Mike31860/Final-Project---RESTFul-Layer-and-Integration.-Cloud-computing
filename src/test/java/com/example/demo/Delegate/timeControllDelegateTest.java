@@ -82,7 +82,9 @@ class timeControllDelegateTest {
 		assertNotNull(timeControlDelegate.guardar(nuevo));
 		nuevo.setName("hey");
 		when(restTemplate.patchForObject(SERVER+"api/times", nuevo, TsscTimecontrol.class)).thenReturn(nuevo);
-		//assertNotNull(timeControlDelegate.actualizar(nuevo));
+		timeControlDelegate.actualizar(nuevo);
+		when(restTemplate.getForObject(SERVER+"api/times/"+nuevo.getId(), TsscTimecontrol.class )).thenReturn(nuevo);
+		assertEquals(timeControlDelegate.findById(nuevo.getId()).getName(), "hey");
 		
 	}
 	
@@ -102,6 +104,7 @@ class timeControllDelegateTest {
 		assertNotNull(timeControlDelegate.guardar(nuevo));
 		restTemplate.delete(SERVER+"api/times/"+nuevo.getId());
 		timeControlDelegate.eliminar(nuevo);
+		when(restTemplate.getForObject(SERVER+"api/times/"+nuevo.getId(), TsscTimecontrol.class )).thenReturn(null);
 		assertNull(timeControlDelegate.findById(nuevo.getId()));
 	
 		
