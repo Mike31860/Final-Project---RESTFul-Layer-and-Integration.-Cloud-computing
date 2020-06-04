@@ -9,6 +9,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import com.example.demo.DAOS.AdminDao;
 import com.example.demo.Model.TsscAdmin;
 import com.example.demo.Repository.AdminRepository;
 
@@ -18,11 +19,11 @@ public class MyCustomUserDetailsService implements UserDetailsService {
 	
 	
 	
-	private AdminRepository usuarios;
+	private AdminDao usuarios;
 	
 	
 	@Autowired
-	public MyCustomUserDetailsService(AdminRepository usuarios) {
+	public MyCustomUserDetailsService(AdminDao usuarios) {
 		super();
 		this.usuarios = usuarios;
 	}
@@ -30,7 +31,7 @@ public class MyCustomUserDetailsService implements UserDetailsService {
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		TsscAdmin userApp = usuarios.findByUsername(username).get(0);
+		TsscAdmin userApp = usuarios.findByUser(username);
 		if (userApp != null) {
 			User.UserBuilder builder = User.withUsername(username).password(userApp.getPassword()).roles(userApp.getSuperAdmin());
 			return builder.build();
