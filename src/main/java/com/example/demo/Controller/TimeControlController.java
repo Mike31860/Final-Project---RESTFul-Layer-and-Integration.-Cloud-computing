@@ -115,7 +115,7 @@ public class TimeControlController {
 				modelPrincipal.addAttribute("intervalRunning", tsscTimecontrol.getIntervalRunning());
 				modelPrincipal.addAttribute("timeInterval", tsscTimecontrol.getTimeInterval());
 				modelPrincipal.addAttribute("games", gameServicio.findAll());
-				return "storyCap/EditarHistoria";
+				return "Cronograma/editarCrono";
 			}
 
 			else {
