@@ -51,7 +51,7 @@ public class AdminDaoImpt implements AdminDao {
 
 	@Override
 	public TsscAdmin findByUser(String user) {
-		String jpql = "Select a from TsscAdmin a Where a.user = '"+user+"'";
+		String jpql = "Select a from TsscAdmin a Where a.username = '"+user+"'";
 		TsscAdmin admin = (TsscAdmin) entityManager.createQuery(jpql).getSingleResult();
 		return admin;
 	}
