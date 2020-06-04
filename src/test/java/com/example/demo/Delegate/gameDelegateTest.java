@@ -88,6 +88,95 @@ class gameDelegateTest {
 	}
 	
 	@Test
+	void testAnadirGameSinTema() {
+
+		TsscGame gameOne = new TsscGame();
+		gameOne.setNGroups(1);
+		gameOne.setNSprints(1);
+
+		gameOne.setName("Miguel");
+		gameOne.setAdminPassword("123456");
+		gameOne.setScheduledDate(LocalDate.now());
+		gameOne.setStartTime(LocalTime.NOON);
+		gameOne.setUserPassword("456");
+		gameOne.setGuestPassword("123456");
+	
+        
+        
+        when(restTemplate.postForObject(SERVER +"api/games", gameOne, TsscGame.class)).thenReturn(gameOne);
+		assertNotNull(gameServiceImp.guardar(gameOne));
+
+
+	}
+	
+	
+	@Test
+	void testEncontrarporFecha() {
+
+		TsscGame gameOne = new TsscGame();
+		gameOne.setNGroups(1);
+		gameOne.setNSprints(1);
+		
+        TsscTopic nuevo= new TsscTopic();
+		
+		nuevo.setDefaultGroups(2);
+		nuevo.setDefaultSprints(2);
+		nuevo.setDescription("Primer Tema");
+		nuevo.setName("Miguel");
+		topiService.AnadirTopic(nuevo);
+	
+		gameOne.setName("Miguel");
+		gameOne.setAdminPassword("123456");
+		gameOne.setScheduledDate(LocalDate.now());
+		gameOne.setStartTime(LocalTime.NOON);
+		gameOne.setUserPassword("456");
+		gameOne.setGuestPassword("123456");
+		gameOne.setTsscTopic(nuevo);
+        
+        
+        when(restTemplate.postForObject(SERVER +"api/games", gameOne, TsscGame.class)).thenReturn(gameOne);
+		assertNotNull(gameServiceImp.guardar(gameOne));
+		
+		
+		TsscGame gameTwo = new TsscGame();
+		gameTwo.setNGroups(1);
+		gameTwo.setNSprints(1);
+		
+        TsscTopic nuevoTwo= new TsscTopic();
+		
+        nuevoTwo.setDefaultGroups(2);
+        nuevoTwo.setDefaultSprints(2);
+        nuevoTwo.setDescription("Segundo Tema");
+        nuevoTwo.setName("Nelson");
+		topiService.AnadirTopic(nuevoTwo);
+	
+		gameTwo.setName("NelsonGame");
+		gameTwo.setAdminPassword("123456");
+		gameTwo.setScheduledDate(LocalDate.now());
+		gameTwo.setStartTime(LocalTime.NOON);
+		gameTwo.setUserPassword("456");
+		gameTwo.setGuestPassword("123456");
+		gameTwo.setTsscTopic(nuevoTwo);
+        
+        
+        when(restTemplate.postForObject(SERVER +"api/games", gameTwo, TsscGame.class)).thenReturn(gameTwo);
+		assertNotNull(gameServiceImp.guardar(gameTwo));
+		
+		TsscGame[] array= new TsscGame[2];
+		array[0]=gameOne;
+		array[1]=gameTwo;
+		
+		when(restTemplate.getForObject(SERVER+"api/games/fecha/"+LocalDate.now(), TsscGame[].class )).thenReturn(array);
+		
+		assertEquals(gameServiceImp.encontrarPorFecha(LocalDate.now().toString()).size(),2);
+
+
+	}
+	
+	
+
+	
+	@Test
 	void testActualizarGameconTema() {
 
 		TsscGame gameOne = new TsscGame();
